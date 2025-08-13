@@ -1,0 +1,30 @@
+[
+  {
+    "title": "The Geopolitics of Climate Change",
+    "slug": "geopolitics-climate",
+    "category": "Geopolitics",
+    "kicker": "FEATURE",
+    "excerpt": "How rising sea levels and resource conflicts are reshaping borders and diplomacy.",
+    "cover": "geopolitics-climate/hero.jpg",
+    "byline": "Rolly Correia · 8 min read"
+  },
+  {
+    "title": "Rising Tides of Inequality",
+    "slug": "rising-inequality",
+    "category": "Inequality",
+    "kicker": "ARTICLE",
+    "excerpt": "A visual deep dive into the global wealth gap post-COVID.",
+    "cover": "rising-inequality/cover.jpg",
+    "byline": "R. Correia · 6 min read"
+  },
+  {
+    "title": "The Allure of Quiet Luxury",
+    "slug": "quiet-luxury",
+    "category": "Fashion",
+    "kicker": "STYLE",
+    "excerpt": "Why minimalism is the new status code.",
+    "cover": "quiet-luxury/cover.jpg",
+    "byline": "R. Correia · 4 min read"
+  }
+  // Add more with: Sustainability or Lifestyle when you have them
+]
