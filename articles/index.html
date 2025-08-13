@@ -1,40 +1,90 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Articles · Diluted Stories</title>
+  <meta name="description" content="Explore essays by category: Geopolitics, Sustainability, Inequality, Lifestyle, Fashion." />
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="./index.html">Articles</a>
-      <a href="../contact.html">Contact</a>
-    </nav>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html">DILUTED STORIES</a>
+      <nav class="nav">
+        <a href="../index.html">Home</a>
+        <a href="./index.html" aria-current="page">Articles</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <h1>All Articles</h1>
-    <div class="article-grid">
-      <a class="article-card" href="./geopolitics/index.html">
-        <img src="./geopolitics/hero.jpg" alt="Geopolitics">
-        <h2>The Geopolitics of Climate Change</h2>
-        <p>How climate shifts are rewriting global diplomacy.</p>
-      </a>
+  <main class="wrap section" style="padding-top:24px">
+    <h1 class="section-title" style="font-size:28px; margin-bottom:8px;">Articles</h1>
+    <p class="muted" style="margin:0 0 20px;">
+      Browse by category: Geopolitics, Sustainability, Inequality, Lifestyle, Fashion.
+    </p>
 
-      <a class="article-card" href="./rising-inequality/index.html">
-        <img src="./rising-inequality/hero.jpg" alt="Inequality">
-        <h2>Rising Inequality in the 21st Century</h2>
-        <p>Examining the growing wealth divide worldwide.</p>
-      </a>
-    </div>
+    <!-- Category sections will be injected here -->
+    <div id="categories"></div>
   </main>
 
-  <footer>
-    <p>© <span id="year"></span> Diluted Stories</p>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© <span id="year"></span> Diluted Stories</p>
+    </div>
   </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const CATEGORY_ORDER = ["Geopolitics","Sustainability","Inequality","Lifestyle","Fashion"];
+
+    fetch('./articles.json')
+      .then(r => r.json())
+      .then(items => {
+        // Group by category
+        const byCat = Object.create(null);
+        for (const c of CATEGORY_ORDER) byCat[c] = [];
+        items.forEach(it => {
+          if (!byCat[it.category]) byCat[it.category] = [];
+          byCat[it.category].push(it);
+        });
+
+        // Build sections
+        const container = document.getElementById('categories');
+        container.innerHTML = CATEGORY_ORDER
+          .filter(cat => (byCat[cat] && byCat[cat].length))
+          .map(cat => {
+            const cards = byCat[cat]
+              .map((it, idx) => `
+                <article class="story-card ${idx===0 ? 'story-card--lg' : ''}">
+                  <a class="card-link" href="./${it.slug}/" aria-label="${it.title}"></a>
+                  <img loading="lazy" alt="${it.title}" src="./${it.cover}">
+                  <div class="card-overlay">
+                    <span class="badge">${it.kicker || cat.toUpperCase()}</span>
+                    <h3 class="card-title">${it.title}</h3>
+                    <p class="card-excerpt">${it.excerpt || ''}</p>
+                    <div class="byline">${it.byline || ''}</div>
+                  </div>
+                </article>
+              `).join('');
+
+            return `
+              <section class="section" style="padding-top:8px">
+                <h2 class="section-heading" style="margin:6px 0 14px">${cat}</h2>
+                <div class="cards-grid">${cards}</div>
+              </section>
+            `;
+          }).join('');
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('categories').innerHTML =
+          '<p>Could not load articles. Please refresh.</p>';
+      });
+  </script>
 </body>
 </html>
