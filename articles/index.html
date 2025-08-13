@@ -73,11 +73,11 @@
               `).join('');
 
             return `
-              <section class="section" style="padding-top:8px">
-                <h2 class="section-heading" style="margin:6px 0 14px">${cat}</h2>
-                <div class="cards-grid">${cards}</div>
-              </section>
-            `;
+  <section id="${cat}" class="section" style="padding-top:8px">
+    <h2 class="section-heading" style="margin:6px 0 14px">${cat}</h2>
+    <div class="cards-grid">${cards}</div>
+  </section>
+`;
           }).join('');
       })
       .catch(err => {
