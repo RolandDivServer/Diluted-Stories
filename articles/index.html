@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles · Diluted Stories</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./index.html">Articles</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>All Articles</h1>
+    <div class="article-grid">
+      <a class="article-card" href="./geopolitics/index.html">
+        <img src="./geopolitics/hero.jpg" alt="Geopolitics">
+        <h2>The Geopolitics of Climate Change</h2>
+        <p>How climate shifts are rewriting global diplomacy.</p>
+      </a>
+
+      <a class="article-card" href="./rising-inequality/index.html">
+        <img src="./rising-inequality/hero.jpg" alt="Inequality">
+        <h2>Rising Inequality in the 21st Century</h2>
+        <p>Examining the growing wealth divide worldwide.</p>
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Diluted Stories</p>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
