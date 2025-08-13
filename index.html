@@ -1,12 +1,118 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diluted Stories</title>
+  <meta name="description" content="Unfiltered perspectives on power, poverty & society." />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
 <body>
-  <h2>Diluted Stories</h2>
-  <p>Unfiltered Perspectives on Power, Poverty & Society</p>
-<nav>
-  <a href="./index.html">Home</a>
-  <a href="./articles.html">Articles</a>
-  <a href="./contact.html">Contact</a>
-</nav>
+
+  <!-- Top bar -->
+  <header class="ds-header">
+    <div class="wrap">
+      <button class="hamburger" aria-label="Menu">☰</button>
+      <a class="brand" href="./index.html">DILUTED STORIES</a>
+      <nav class="ds-nav">
+        <a href="./index.html" aria-current="page">Home</a>
+        <a href="./articles.html">Articles</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="wrap ds-subnav">
+      <a href="./articles.html">Technology</a>
+      <a href="./articles.html">Sustainability</a>
+      <a href="./articles.html">Geopolitics</a>
+      <a href="./articles.html">Society</a>
+      <a href="./articles.html">Style & Society</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="wrap hero-spot">
+      <article class="hero-card">
+        <a class="card-link" href="./articles.html" aria-label="Read The Geopolitics of Climate Change"></a>
+        <img loading="lazy" alt="Earth at sunrise" src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop">
+        <div class="hero-overlay">
+          <span class="badge">FEATURE</span>
+          <h1 class="hero-title">The Geopolitics of Climate Change</h1>
+          <p class="hero-sub">How rising sea levels and resource conflicts are reshaping borders and diplomacy.</p>
+          <div class="byline">By Rolly Correia · 8 min read</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- MUST READ -->
+    <section class="wrap section">
+      <h2 class="section-heading">Must-Read</h2>
+
+      <div class="cards-grid">
+        <!-- Card 1 (large) -->
+        <article class="story-card story-card--lg">
+          <a class="card-link" href="./articles.html" aria-label="Rising Tides of Inequality"></a>
+          <img loading="lazy" alt="City and informal settlements" src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1400&auto=format&fit=crop">
+          <div class="card-overlay">
+            <span class="badge">ARTICLES</span>
+            <h3 class="card-title">Rising Tides of Inequality</h3>
+            <p class="card-excerpt">A visual deep dive into the global wealth gap post-COVID.</p>
+            <div class="byline">By R. Correia · 6 min read</div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="story-card">
+          <a class="card-link" href="./articles.html" aria-label="How Liberty London..."></a>
+          <img loading="lazy" alt="Historic facade at dusk" src="https://images.unsplash.com/photo-1488740304459-45c4277fdbb1?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-overlay">
+            <span class="badge">RETAIL</span>
+            <h3 class="card-title">How heritage retail survives slowdowns</h3>
+            <p class="card-excerpt">What strategy shifts keep legacy stores resilient.</p>
+            <div class="byline">By Staff · 5 min read</div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="story-card">
+          <a class="card-link" href="./articles.html" aria-label="The Allure of Quiet Luxury"></a>
+          <img loading="lazy" alt="Collage of travel and phones" src="https://images.unsplash.com/photo-1520975922323-364e138278bd?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-overlay">
+            <span class="badge">STYLE & SOC</span>
+            <h3 class="card-title">The Allure of Quiet Luxury</h3>
+            <p class="card-excerpt">Why minimalism is the new status code.</p>
+            <div class="byline">By R. Correia · 4 min read</div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="story-card">
+          <a class="card-link" href="./articles.html" aria-label="Personalised travel recommendations"></a>
+          <img loading="lazy" alt="People with phones while traveling" src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-overlay">
+            <span class="badge">TECHNOLOGY</span>
+            <h3 class="card-title">Personalised travel is the new status symbol</h3>
+            <p class="card-excerpt">Algorithms are curating taste—and class.</p>
+            <div class="byline">By Guest · 5 min read</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="ds-footer">
+    <div class="wrap">
+      <p>© <span id="year"></span> Diluted Stories · <a href="./contact.html">Contact</a></p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
