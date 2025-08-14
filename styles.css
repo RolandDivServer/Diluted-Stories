@@ -75,3 +75,52 @@ img{max-width:100%;display:block}
 /* Small improvements */
 a{text-decoration:none;color:inherit}
 a:focus-visible{outline:2px solid #222;outline-offset:2px}
+
+/* Off-canvas menu */
+.hide-on-mobile { display:none; }
+@media (min-width: 900px){ .hide-on-mobile { display:flex; gap:18px; } }
+
+.menu-trigger{
+  border:0; background:transparent; font:600 13px Inter,system-ui;
+  letter-spacing:.12em; cursor:pointer;
+}
+
+.oc-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.35);
+  opacity:0; transition:opacity .25s ease; z-index:80;
+}
+.oc-overlay.is-visible{ opacity:1; }
+
+.oc-panel{
+  position:fixed; top:0; right:0; height:100%; width:min(420px, 92vw);
+  background:#fff; box-shadow: -10px 0 30px rgba(0,0,0,.12);
+  transform:translateX(100%); transition:transform .28s ease; z-index:90;
+  display:flex; flex-direction:column; padding:18px 22px;
+}
+.oc-panel.is-open{ transform:translateX(0); }
+
+.oc-close{
+  border:0; background:transparent; font-size:28px; line-height:1;
+  align-self:flex-end; cursor:pointer; margin:-4px -4px 6px 0;
+}
+
+.oc-header .brand{
+  font-family:"Playfair Display",serif; font-weight:700; font-size:24px;
+  letter-spacing:.06em; text-decoration:none; color:var(--ink);
+  display:inline-block; margin:6px 0 16px;
+  border-bottom:1px solid var(--rule); padding-bottom:14px; width:100%;
+}
+
+.oc-sections{
+  display:flex; flex-direction:column; gap:18px;
+  padding:10px 0 18px; text-transform:uppercase; letter-spacing:.12em;
+  font:600 13px Inter,system-ui;
+}
+.oc-sections a{ color:#111; text-decoration:none; }
+.oc-sections hr{ border:0; border-top:1px solid var(--rule); margin:10px 0 0; }
+
+.oc-footer{
+  margin-top:auto; padding-top:16px; border-top:1px solid var(--rule);
+}
+.oc-link{ font:500 13px Inter,system-ui; color:#333; text-decoration:none; }
+.oc-link:hover{ text-decoration:underline; }
