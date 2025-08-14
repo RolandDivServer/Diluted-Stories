@@ -25,6 +25,10 @@
     <button class="menu-trigger" aria-controls="site-menu" aria-expanded="false" aria-label="Open menu">
       MENU
     </button>
+      <div id="menu-overlay" class="oc-overlay" hidden></div>
+
+<aside id="site-menu" class="oc-panel" aria-hidden="true" tabindex="-1">
+  <button class="oc-close" aria-label="Close menu">×</button>
   </div>
 
   <div class="wrap ds-subnav">
@@ -34,6 +38,11 @@
     <a href="/Diluted-Stories/articles/#Lifestyle">Lifestyle</a>
     <a href="/Diluted-Stories/articles/#Fashion">Fashion</a>
   </div>
+  <div class="oc-footer">
+  <a class="oc-link" href="https://instagram.com/rollyswiki" target="_blank" rel="noopener">
+    Instagram <strong>@rollyswiki</strong>
+  </a>
+</div>
 </header>
 
   <main>
@@ -118,5 +127,36 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <script>
+  const btn = document.querySelector('.menu-trigger');
+  const panel = document.getElementById('site-menu');
+  const overlay = document.getElementById('menu-overlay');
+  const closeBtn = document.querySelector('.oc-close');
+
+  function openMenu(){
+    panel.classList.add('is-open');
+    overlay.hidden = false;
+    // force reflow so transition runs when toggling hidden
+    overlay.getBoundingClientRect();
+    overlay.classList.add('is-visible');
+    panel.setAttribute('aria-hidden','false');
+    btn.setAttribute('aria-expanded','true');
+    panel.focus();
+    document.body.style.overflow='hidden';
+  }
+  function closeMenu(){
+    panel.classList.remove('is-open');
+    overlay.classList.remove('is-visible');
+    panel.setAttribute('aria-hidden','true');
+    btn.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+    setTimeout(()=>overlay.hidden=true, 250);
+    btn.focus();
+  }
+  btn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMenu(); });
+</script>
 </body>
 </html>
