@@ -132,8 +132,20 @@ a:focus-visible{outline:2px solid #222;outline-offset:2px}
 .oc-sections a{ color:#111; text-decoration:none; }
 .oc-sections hr{ border:0; border-top:1px solid var(--rule); margin:10px 0 0; }
 
-.oc-footer{
-  margin-top:auto; padding-top:16px; border-top:1px solid var(--rule);
+.oc-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  text-align: center;   /* centers inline text & links */
 }
-.oc-link{ font:500 13px Inter,system-ui; color:#333; text-decoration:none; }
-.oc-link:hover{ text-decoration:underline; }
+
+.oc-footer .oc-link {
+  font: 500 13px Inter, system-ui;
+  color: #333;
+  text-decoration: none;
+  display: inline-block; /* keeps it neat */
+}
+
+.oc-footer .oc-link:hover {
+  text-decoration: underline;
+}
