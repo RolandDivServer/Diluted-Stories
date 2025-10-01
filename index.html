@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,133 +12,165 @@
 </head>
 <body>
 
+    <!-- Header (centered brand + utilities) -->
 <header class="ds-header">
-    <a class="brand" href="/Diluted-Stories/index.html">DILUTED STORIES</a>
-    <nav class="ds-nav">
-      <a href="/Diluted-Stories/articles/index.html">Articles</a>
-      <a href="/Diluted-Stories/contact.html">Contact</a>
-    </nav>
+  <div class="wrap ds-header-inner">
+    <!-- Left spacer keeps brand visually centered -->
+    <div class="ds-header-slot" aria-hidden="true"></div>
 
+    <!-- Centered brand -->
+    <a class="brand" href="./index.html" aria-label="Diluted Stories — Home">DILUTED STORIES</a>
 
-  <div class="oc-footer">
-  <a class="oc-link" href="https://instagram.com/rollyswiki" target="_blank" rel="noopener">
-    Instagram <strong>@rollyswiki</strong>
-  </a>
-</div>
+    <!-- Right utilities: theme + a11y -->
+    <div class="ds-header-slot ds-utils">
+      <button id="theme-toggle" class="btn-ghost" aria-label="Toggle dark or light mode" title="Dark/Light">🌓</button>
+      <button id="text-resize" class="btn-ghost" aria-label="Toggle enlarged text" title="Enlarge Text">A+</button>
+      <button id="tts" class="btn-ghost" aria-label="Read this page aloud" title="Text to Speech">🔊</button>
+    </div>
+  </div>
+
+  <nav class="ds-nav ds-nav--center">
+    <!-- NOTE: No subdirectories; everything points to single pages -->
+    <a href="./articles.html">Articles</a>
+    <a href="./contact.html">Contact</a>
+  </nav>
 </header>
 
-  <main>
+<main>
+  <!--
+       HERO — Right to Repair (with working Unsplash image)-->
+  <section class="wrap hero-spot">
+    <article class="hero-card">
+      <!-- Link to the consolidated articles page with anchor to the piece -->
+      <a class="card-link" href="./articles.html#right-to-repair" aria-label="Read: What is the Right to Repair movement?"></a>
 
-    <!-- HERO -->
-    <section class="wrap hero-spot">
-      <article class="hero-card">
-        <a class="card-link" href="./articles.html" aria-label="Read The Geopolitics of Climate Change"></a>
-        <img loading="lazy" alt="Person repairing a phone" src="https://unsplash.com/photos/person-repairing-smartphones-under-a-lighted-table-PZLgTUAhxMM?w=1600&fit=crop&q=80&auto=format">
-        <div class="hero-overlay">
-          <span class="badge">FEATURE</span>
-          <h1 class="hero-title">What is the Right to Repiar movement?</h1>
-          <p class="hero-sub">How a single legislation can help to reverse the damage on Earth</p>
-          <div class="byline">By R Correia · 8 min read</div>
+      <!-- Using Unsplash /photos endpoint w/ params (serves an actual image) -->
+      <img
+        loading="lazy"
+        alt="A technician repairing a smartphone under a well-lit workbench lamp"
+        src="https://unsplash.com/photos/person-repairing-smartphones-under-a-lighted-table-PZLgTUAhxMM?w=1600&fit=crop&q=80&auto=format"
+      >
+
+      <div class="hero-overlay">
+        <span class="badge">FEATURE</span>
+        <h1 class="hero-title">What is the Right to Repair movement?</h1>
+        <p class="hero-sub">How a single legislation can help reverse environmental damage</p>
+        <div class="byline">By R. Correia · 8 min read</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- =========================================
+       MUST READ — Grid of editable cards
+       ========================================= -->
+  <section class="wrap section">
+    <h2 class="section-heading">Must-Read</h2>
+
+    <div class="cards-grid">
+      <!-- Large card -->
+      <article class="story-card story-card--lg">
+        <a class="card-link" href="./articles.html#inequality" aria-label="Rising Tides of Inequality"></a>
+        <img loading="lazy" alt="City skyline alongside informal settlements" src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1400&auto=format&fit=crop">
+        <div class="card-overlay">
+          <span class="badge">ARTICLES</span>
+          <h3 class="card-title">Rising Tides of Inequality</h3>
+          <p class="card-excerpt">A visual deep dive into the global wealth gap post-COVID.</p>
+          <div class="byline">By R. Correia · 6 min read</div>
         </div>
       </article>
-    </section>
 
-    <!-- MUST READ -->
-    <section class="wrap section">
-      <h2 class="section-heading">Must-Read</h2>
+      <!-- Standard cards (clone these blocks to add more) -->
+      <article class="story-card">
+        <a class="card-link" href="./articles.html#heritage-retail" aria-label="How heritage retail survives slowdowns"></a>
+        <img loading="lazy" alt="Historic retail facade at dusk" src="https://images.unsplash.com/photo-1488740304459-45c4277fdbb1?q=80&w=1200&auto=format&fit=crop">
+        <div class="card-overlay">
+          <span class="badge">RETAIL</span>
+          <h3 class="card-title">How heritage retail survives slowdowns</h3>
+          <p class="card-excerpt">What strategy shifts keep legacy stores resilient.</p>
+          <div class="byline">By R. Correia · 5 min read</div>
+        </div>
+      </article>
 
-      <div class="cards-grid">
-        <!-- Card 1 (large) -->
-        <article class="story-card story-card--lg">
-          <a class="card-link" href="./articles.html" aria-label="Rising Tides of Inequality"></a>
-          <img loading="lazy" alt="City and informal settlements" src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1400&auto=format&fit=crop">
-          <div class="card-overlay">
-            <span class="badge">ARTICLES</span>
-            <h3 class="card-title">Rising Tides of Inequality</h3>
-            <p class="card-excerpt">A visual deep dive into the global wealth gap post-COVID.</p>
-            <div class="byline">By R. Correia · 6 min read</div>
-          </div>
-        </article>
+      <article class="story-card">
+        <a class="card-link" href="./articles.html#quiet-luxury" aria-label="The Allure of Quiet Luxury"></a>
+        <img loading="lazy" alt="Collage suggesting refined minimalism" src="https://images.unsplash.com/photo-1520975922323-364e138278bd?q=80&w=1200&auto=format&fit=crop">
+        <div class="card-overlay">
+          <span class="badge">STYLE & SOC</span>
+          <h3 class="card-title">The Allure of Quiet Luxury</h3>
+          <p class="card-excerpt">Why minimalism is the new status code.</p>
+          <div class="byline">By R. Correia · 4 min read</div>
+        </div>
+      </article>
 
-        <!-- Card 2 -->
-        <article class="story-card">
-          <a class="card-link" href="./articles.html" aria-label="How Liberty London..."></a>
-          <img loading="lazy" alt="Historic facade at dusk" src="https://images.unsplash.com/photo-1488740304459-45c4277fdbb1?q=80&w=1200&auto=format&fit=crop">
-          <div class="card-overlay">
-            <span class="badge">RETAIL</span>
-            <h3 class="card-title">How heritage retail survives slowdowns</h3>
-            <p class="card-excerpt">What strategy shifts keep legacy stores resilient.</p>
-            <div class="byline">By Staff · 5 min read</div>
-          </div>
-        </article>
+      <article class="story-card">
+        <a class="card-link" href="./articles.html#personalised-travel" aria-label="Personalised travel recommendations"></a>
+        <img loading="lazy" alt="Travellers using phones on the go" src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?q=80&w=1200&auto=format&fit=crop">
+        <div class="card-overlay">
+          <span class="badge">TECHNOLOGY</span>
+          <h3 class="card-title">Personalised travel is the new status symbol</h3>
+          <p class="card-excerpt">Algorithms are curating taste — and class.</p>
+          <div class="byline">By R. Correia · 5 min read</div>
+        </div>
+      </article>
 
-        <!-- Card 3 -->
-        <article class="story-card">
-          <a class="card-link" href="./articles.html" aria-label="The Allure of Quiet Luxury"></a>
-          <img loading="lazy" alt="Collage of travel and phones" src="https://images.unsplash.com/photo-1520975922323-364e138278bd?q=80&w=1200&auto=format&fit=crop">
-          <div class="card-overlay">
-            <span class="badge">STYLE & SOC</span>
-            <h3 class="card-title">The Allure of Quiet Luxury</h3>
-            <p class="card-excerpt">Why minimalism is the new status code.</p>
-            <div class="byline">By R. Correia · 4 min read</div>
-          </div>
-        </article>
-
-        <!-- Card 4 -->
-        <article class="story-card">
-          <a class="card-link" href="./articles.html" aria-label="Personalised travel recommendations"></a>
-          <img loading="lazy" alt="People with phones while traveling" src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?q=80&w=1200&auto=format&fit=crop">
-          <div class="card-overlay">
-            <span class="badge">TECHNOLOGY</span>
-            <h3 class="card-title">Personalised travel is the new status symbol</h3>
-            <p class="card-excerpt">Algorithms are curating taste—and class.</p>
-            <div class="byline">By Guest · 5 min read</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="ds-footer">
-    <div class="wrap">
-      <p>© <span id="year"></span> Diluted Stories · <a href="./contact.html">Contact</a></p>
+      <!-- 🔁 TEMPLATE — copy/paste this to add more cards quickly -->
+      <article class="story-card">
+        <a class="card-link" href="./articles.html#new-article-slug" aria-label="New Article"></a>
+        <img loading="lazy" alt="Your custom image alt text" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop">
+        <div class="card-overlay">
+          <span class="badge">CATEGORY</span>
+          <h3 class="card-title">New Article Title</h3>
+          <p class="card-excerpt">Short description goes here…</p>
+          <div class="byline">By R. Correia · X min read</div>
+        </div>
+      </article>
+      <!-- /TEMPLATE -->
     </div>
-  </footer>
+  </section>
+</main>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  <script>
-  const btn = document.querySelector('.menu-trigger');
-  const panel = document.getElementById('site-menu');
-  const overlay = document.getElementById('menu-overlay');
-  const closeBtn = document.querySelector('.oc-close');
+<footer class="ds-footer">
+  <div class="wrap">
+    <p>© <span id="year"></span> Diluted Stories · <a href="./contact.html">Contact</a></p>
+  </div>
+</footer>
 
-  function openMenu(){
-    panel.classList.add('is-open');
-    overlay.hidden = false;
-    // force reflow so transition runs when toggling hidden
-    overlay.getBoundingClientRect();
-    overlay.classList.add('is-visible');
-    panel.setAttribute('aria-hidden','false');
-    btn.setAttribute('aria-expanded','true');
-    panel.focus();
-    document.body.style.overflow='hidden';
+<!--App scripts (theme, a11y, footer year)-->
+<script>
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Respect system preference on first load
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (!localStorage.getItem('ds-theme')) {
+    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('ds-theme'));
   }
-  function closeMenu(){
-    panel.classList.remove('is-open');
-    overlay.classList.remove('is-visible');
-    panel.setAttribute('aria-hidden','true');
-    btn.setAttribute('aria-expanded','false');
-    document.body.style.overflow='';
-    setTimeout(()=>overlay.hidden=true, 250);
-    btn.focus();
-  }
-  btn.addEventListener('click', openMenu);
-  closeBtn.addEventListener('click', closeMenu);
-  overlay.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMenu(); });
+
+  // Theme toggle button
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('ds-theme', next);
+  });
+
+  // Accessibility: enlarge text
+  document.getElementById('text-resize').addEventListener('click', () => {
+    document.body.classList.toggle('enlarged-text');
+  });
+
+  // Accessibility: Text-to-speech (basic, whole page)
+  document.getElementById('tts').addEventListener('click', () => {
+    try {
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance(document.body.innerText);
+      speechSynthesis.speak(msg);
+    } catch(e) {
+      alert('Text-to-speech is not supported in this browser.');
+    }
+  });
 </script>
 </body>
 </html>
