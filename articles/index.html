@@ -1,92 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PAGE TITLE · Diluted Stories</title>
-  <link rel="stylesheet" href="../styles.css" /> <!-- Adjust ../ if inside subfolders -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Articles · Diluted Stories</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <meta name="color-scheme" content="light dark">
 </head>
 <body>
-
-<!-- Header -->
 <header class="ds-header">
-  <div class="wrap">
-    <button class="hamburger" aria-label="Menu">☰</button>
-    <a class="brand" href="/Diluted-Stories/index.html">DILUTED STORIES</a>
-    <nav class="ds-nav">
-      <a href="/Diluted-Stories/articles/index.html">Articles</a>
-      <a href="/Diluted-Stories/contact.html">Contact</a>
-    </nav>
-  </div>
-
-  <div class="wrap ds-subnav">
-    <a href="/Diluted-Stories/articles/#Geopolitics">Geopolitics</a>
-    <a href="/Diluted-Stories/articles/#Sustainability">Sustainability</a>
-    <a href="/Diluted-Stories/articles/#Inequality">Inequality</a>
-    <a href="/Diluted-Stories/articles/#Lifestyle">Lifestyle</a>
-    <a href="/Diluted-Stories/articles/#Fashion">Fashion</a>
+  <div class="wrap header-grid">
+    <div aria-hidden="true"></div>
+    <a class="brand" href="./index.html">DILUTED STORIES</a>
+    <div class="header-right">
+      <nav class="ds-nav" aria-label="Primary">
+        <a href="./articles.html" aria-current="page">Articles</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+      <div class="a11y-controls">
+        <button id="themeToggle" class="ui-btn" aria-pressed="false" title="Toggle dark or light mode">🌓</button>
+        <button id="textBigger" class="ui-btn" title="Increase text size" aria-label="Increase text size">A+</button>
+        <button id="textSmaller" class="ui-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
+        <button id="ttsToggle" class="ui-btn" aria-pressed="false" title="Read this page aloud">🔈</button>
+      </div>
+    </div>
   </div>
 </header>
 
-<!-- Main -->
-<main class="wrap" style="padding-top: 24px;">
-  <!-- PAGE-SPECIFIC CONTENT GOES HERE -->
+<main id="main-content">
+  <section class="wrap section">
+    <h1 class="page-title">Articles</h1>
+
+    <!--
+      One place for ALL articles moving forward.
+      To remove subfolders like "fashion/", put every article file here and link directly.
+      Keep bylines as "By R. Correia" for consistency.
+    -->
+
+    <div class="cards-grid">
+
+      <article id="right-to-repair" class="story-card story-card--lg">
+        <a class="card-link" href="#" aria-label="Right to Repair (placeholder; wire to article page)"></a>
+        <img loading="lazy" alt="Phone repair on a lit workbench"
+             src="https://images.unsplash.com/photo-PZLgTUAhxMM?auto=format&fit=crop&w=1400&q=80">
+        <div class="card-overlay">
+          <span class="badge">SUSTAINABILITY</span>
+          <h3 class="card-title">What is the Right to Repair movement?</h3>
+          <p class="card-excerpt">How targeted legislation can curb e-waste and extend device lifespans.</p>
+          <div class="byline">By R. Correia · 8 min read</div>
+        </div>
+      </article>
+
+      <article id="inequality" class="story-card">
+        <a class="card-link" href="#" aria-label="Rising Tides of Inequality"></a>
+        <img loading="lazy" alt="City and informal settlements"
+             src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80">
+        <div class="card-overlay">
+          <span class="badge">ARTICLES</span>
+          <h3 class="card-title">Rising Tides of Inequality</h3>
+          <p class="card-excerpt">A visual deep dive into the global wealth gap post-COVID.</p>
+          <div class="byline">By R. Correia · 6 min read</div>
+        </div>
+      </article>
+
+      <article id="heritage-retail" class="story-card">
+        <a class="card-link" href="#" aria-label="Heritage Retail"></a>
+        <img loading="lazy" alt="Historic facade at dusk"
+             src="https://images.unsplash.com/photo-1488740304459-45c4277fdbb1?auto=format&fit=crop&w=1200&q=80">
+        <div class="card-overlay">
+          <span class="badge">RETAIL</span>
+          <h3 class="card-title">How heritage retail survives slowdowns</h3>
+          <p class="card-excerpt">What strategy shifts keep legacy stores resilient.</p>
+          <div class="byline">By R. Correia · 5 min read</div>
+        </div>
+      </article>
+
+      <article id="quiet-luxury" class="story-card">
+        <a class="card-link" href="#" aria-label="Quiet Luxury"></a>
+        <img loading="lazy" alt="Lifestyle collage"
+             src="https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1200&q=80">
+        <div class="card-overlay">
+          <span class="badge">STYLE & SOC</span>
+          <h3 class="card-title">The Allure of Quiet Luxury</h3>
+          <p class="card-excerpt">Why minimalism is the new status code.</p>
+          <div class="byline">By R. Correia · 4 min read</div>
+        </div>
+      </article>
+
+      <article id="personalised-travel" class="story-card">
+        <a class="card-link" href="#" aria-label="Personalised travel"></a>
+        <img loading="lazy" alt="Travel and phones"
+             src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?auto=format&fit=crop&w=1200&q=80">
+        <div class="card-overlay">
+          <span class="badge">TECHNOLOGY</span>
+          <h3 class="card-title">Personalised travel is the new status symbol</h3>
+          <p class="card-excerpt">Algorithms are curating taste—and class.</p>
+          <div class="byline">By R. Correia · 5 min read</div>
+        </div>
+      </article>
+
+      <!-- Add more articles by duplicating a card and updating IDs, text, and image -->
+    </div>
+  </section>
 </main>
 
-<!-- Footer -->
-<footer class="site-footer">
+<footer class="ds-footer">
   <div class="wrap">
-    <p>© <span id="year"></span> Diluted Stories</p>
+    <p>© <span id="year"></span> Diluted Stories · <a href="./contact.html">Contact</a></p>
   </div>
 </footer>
 
+<script src="./config.js"></script>
+<script src="./scripts.js"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-    const CATEGORY_ORDER = ["Geopolitics","Sustainability","Inequality","Lifestyle","Fashion"];
-
-    fetch('./articles.json')
-      .then(r => r.json())
-      .then(items => {
-        // Group by category
-        const byCat = Object.create(null);
-        for (const c of CATEGORY_ORDER) byCat[c] = [];
-        items.forEach(it => {
-          if (!byCat[it.category]) byCat[it.category] = [];
-          byCat[it.category].push(it);
-        });
-
-        // Build sections
-        const container = document.getElementById('categories');
-        container.innerHTML = CATEGORY_ORDER
-          .filter(cat => (byCat[cat] && byCat[cat].length))
-          .map(cat => {
-            const cards = byCat[cat]
-              .map((it, idx) => `
-                <article class="story-card ${idx===0 ? 'story-card--lg' : ''}">
-                  <a class="card-link" href="./${it.slug}/" aria-label="${it.title}"></a>
-                  <img loading="lazy" alt="${it.title}" src="./${it.cover}">
-                  <div class="card-overlay">
-                    <span class="badge">${it.kicker || cat.toUpperCase()}</span>
-                    <h3 class="card-title">${it.title}</h3>
-                    <p class="card-excerpt">${it.excerpt || ''}</p>
-                    <div class="byline">${it.byline || ''}</div>
-                  </div>
-                </article>
-              `).join('');
-
-            return `
-  <section id="${cat}" class="section" style="padding-top:8px">
-    <h2 class="section-heading" style="margin:6px 0 14px">${cat}</h2>
-    <div class="cards-grid">${cards}</div>
-  </section>
-`;
-          }).join('');
-      })
-      .catch(err => {
-        console.error(err);
-        document.getElementById('categories').innerHTML =
-          '<p>Could not load articles. Please refresh.</p>';
-      });
-  </script>
+  window.A11Y.initTTSTarget('#main-content');
+</script>
 </body>
 </html>
