@@ -67,6 +67,47 @@ img{ max-width:100%; display:block }
 .hero-title{ margin:10px 0 6px; font:700 clamp(28px,4.8vw,52px)/1.04 "Playfair Display",serif }
 .hero-sub{ margin:0 0 8px; font:400 clamp(14px,2.3vw,18px)/1.4 Inter; max-width:800px }
 .byline{ font:500 12px/1.4 Inter; color:#ddd }
+/* === Article Preview Modal (hero only) === */
+.ds-modal[hidden]{ display:none !important; }
+.ds-modal{ position:fixed; inset:0; z-index:1000; }
+.ds-modal__scrim{
+  position:absolute; inset:0; background:rgba(0,0,0,.55);
+  -webkit-backdrop-filter:saturate(120%) blur(2px);
+  backdrop-filter:saturate(120%) blur(2px);
+}
+.ds-modal__panel{
+  position:absolute; left:50%; top:4%;
+  transform:translateX(-50%);
+  width:min(920px, 92vw);
+  max-height:92vh; overflow:auto;
+  background:#fff; color:#101010;
+  border:1px solid #e9e9e9; border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+  padding:12px 16px 24px;
+}
+@media (prefers-color-scheme: dark){
+  .ds-modal__panel{ background:#0d0f12; color:#f1f5f9; border-color:#1c2128; }
+}
+.ds-modal__bar{ display:flex; align-items:center; gap:8px; position:sticky; top:0; background:inherit; padding:8px 0; }
+.ds-modal__bar .spacer{ flex:1; }
+.ds-modal__close{ margin-left:6px; }
+.ui-btn{
+  border:1px solid #e9e9e9; background:transparent; color:inherit; padding:6px 10px; border-radius:8px; cursor:pointer; font-weight:600;
+}
+.ui-btn:focus-visible{ outline:2px solid #4b8df8; outline-offset:2px; }
+
+#articleContent .article-title{
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: clamp(26px, 4.2vw, 40px);
+  line-height: 1.15;
+  margin: 4px 0 6px;
+}
+#articleContent .article-meta{ margin:0 0 12px; opacity:.8; }
+#articleContent .article-hero{ width:100%; height:auto; border-radius:12px; margin:8px 0 14px; object-fit:cover; }
+#articleContent .article-body{ font: 400 1rem/1.6 Inter, system-ui, sans-serif; }
+#articleContent .article-body h3{ font-weight:700; margin:18px 0 8px; font-size:1.1rem; }
+#articleContent .article-body ul{ padding-left:20px; }
 
 /* SECTIONS */
 .section{ padding:18px 0 40px }
