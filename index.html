@@ -103,6 +103,97 @@
   ]
 }
 </template>
+  <script>
+(function(){
+  // Simple, page-local font scaling for the article body
+  let scale = 1;
+
+  function $(sel){ return document.querySelector(sel); }
+  function getTpl(id){
+    const t = document.getElementById('tpl-' + id);
+    if(!t) return null;
+    try { return JSON.parse(t.innerHTML.trim()); } catch(e){ return null; }
+  }
+
+  // Minimal TTS using Web Speech API
+  const TTS = {
+    speaking: false,
+    utterance: null,
+    toggle(text){
+      if(!('speechSynthesis' in window)){ alert('Text-to-speech not supported.'); return; }
+      if(this.speaking){ window.speechSynthesis.cancel(); this.speaking=false; $('#btnRead').setAttribute('aria-pressed','false'); return; }
+      this.utterance = new SpeechSynthesisUtterance(text);
+      this.utterance.rate = 1.0;
+      window.speechSynthesis.speak(this.utterance);
+      this.speaking = true;
+      $('#btnRead').setAttribute('aria-pressed','true');
+      this.utterance.onend = () => { this.speaking=false; $('#btnRead').setAttribute('aria-pressed','false'); };
+    }
+  };
+
+  function openPreview(id){
+    const data = getTpl(id);
+    if(!data) return;
+
+    $('#articleTitle').textContent = data.title || '';
+    $('.article-meta').textContent = data.meta || '';
+    const hero = $('.article-hero');
+    hero.alt = data.imgAlt || '';
+    hero.src = data.imgSrc || '';
+    $('.article-body').innerHTML = (data.body || []).join('');
+
+    // Reset scaling
+    scale = 1;
+    $('.article-body').style.fontSize = '1rem';
+
+    const modal = $('#articleModal');
+    modal.hidden = false;
+    // Focus the close button for keyboard users
+    modal.querySelector('.ds-modal__close').focus();
+
+    // Read button binds current article text
+    $('#btnRead').onclick = () => TTS.toggle($('#articleContent').innerText);
+    $('#btnAplus').onclick = () => { scale = Math.min(1.4, scale + 0.05); $('.article-body').style.fontSize = (scale)+'rem'; };
+    $('#btnAminus').onclick = () => { scale = Math.max(0.9, scale - 0.05); $('.article-body').style.fontSize = (scale)+'rem'; };
+  }
+
+  function closePreview(){
+    const modal = $('#articleModal');
+    modal.hidden = true;
+    if(TTS.speaking){ window.speechSynthesis.cancel(); TTS.speaking=false; }
+    // Clear hash without jumping
+    if (location.hash) history.pushState('', document.title, location.pathname + location.search);
+  }
+
+  // Intercept hero click
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a.card-link');
+    if(!a) return;
+    const href = a.getAttribute('href') || '';
+    if(href === '#right-to-repair'){
+      e.preventDefault();
+      openPreview('right-to-repair');
+      history.pushState(null, '', '#right-to-repair');
+    }
+  });
+
+  // Open directly if the page loads with the hash
+  if (location.hash === '#right-to-repair'){
+    window.requestAnimationFrame(() => openPreview('right-to-repair'));
+  }
+
+  // Close events
+  document.getElementById('articleModal').addEventListener('click', (e) => {
+    if (e.target.matches('[data-close-modal]') || e.target.classList.contains('ds-modal__scrim')) {
+      closePreview();
+    }
+  });
+  window.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !document.getElementById('articleModal').hidden) closePreview(); });
+  window.addEventListener('hashchange', () => {
+    if(location.hash !== '#right-to-repair' && !document.getElementById('articleModal').hidden) closePreview();
+  });
+})();
+</script>
 
   <!-- MUST READ -->
   <section class="wrap section">
