@@ -9,68 +9,77 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Prefer light/dark color in browser UI -->
+  <meta name="color-scheme" content="light dark">
 </head>
 <body>
-
-    <!-- Header (centered brand + utilities) -->
-<header class="ds-header">
-  <div class="wrap ds-header-inner">
-    <!-- Left spacer keeps brand visually centered -->
-    <div class="ds-header-slot" aria-hidden="true"></div>
+<!--
+  HEADER
+  - Brand is perfectly centered via a 3-column grid.
+  - Right side: navigation + controls (Theme, Text size, Read Aloud).
+-->
+<header class="ds-header" role="banner">
+  <div class="wrap header-grid">
+    <!-- Left spacer for centering grid -->
+    <div aria-hidden="true"></div>
 
     <!-- Centered brand -->
-    <a class="brand" href="./index.html" aria-label="Diluted Stories — Home">DILUTED STORIES</a>
+    <a class="brand" href="./index.html">DILUTED STORIES</a>
 
-    <!-- Right utilities: theme + a11y -->
-    <div class="ds-header-slot ds-utils">
-      <button id="theme-toggle" class="btn-ghost" aria-label="Toggle dark or light mode" title="Dark/Light">🌓</button>
-      <button id="text-resize" class="btn-ghost" aria-label="Toggle enlarged text" title="Enlarge Text">A+</button>
-      <button id="tts" class="btn-ghost" aria-label="Read this page aloud" title="Text to Speech">🔊</button>
+    <!-- Right: nav + controls -->
+    <div class="header-right">
+      <nav class="ds-nav" aria-label="Primary">
+        <a href="./articles.html">Articles</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+
+      <div class="a11y-controls" aria-label="Accessibility and theme controls">
+        <button id="themeToggle" class="ui-btn" aria-pressed="false" title="Toggle dark or light mode">🌓</button>
+        <button id="textBigger" class="ui-btn" title="Increase text size" aria-label="Increase text size">A+</button>
+        <button id="textSmaller" class="ui-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
+        <button id="ttsToggle" class="ui-btn" aria-pressed="false" title="Read this page aloud">🔈</button>
+      </div>
     </div>
   </div>
-
-  <nav class="ds-nav ds-nav--center">
-    <!-- NOTE: No subdirectories; everything points to single pages -->
-    <a href="./articles.html">Articles</a>
-    <a href="./contact.html">Contact</a>
-  </nav>
 </header>
 
-<main>
+<main id="main-content">
   <!--
-       HERO — Right to Repair (with working Unsplash image)-->
+    HERO
+    - Unsplash image fixed to a direct image CDN URL.
+    - Title typo fixed ("Repair") and byline normalized to "R. Correia".
+  -->
   <section class="wrap hero-spot">
     <article class="hero-card">
-      <!-- Link to the consolidated articles page with anchor to the piece -->
+      <!-- When you publish a standalone article page, point this link to it -->
       <a class="card-link" href="./articles.html#right-to-repair" aria-label="Read: What is the Right to Repair movement?"></a>
 
-      <!-- Using Unsplash /photos endpoint w/ params (serves an actual image) -->
+      <!-- Direct Unsplash image (image CDN). -->
       <img
         loading="lazy"
-        alt="A technician repairing a smartphone under a well-lit workbench lamp"
-        src="https://unsplash.com/photos/person-repairing-smartphones-under-a-lighted-table-PZLgTUAhxMM?w=1600&fit=crop&q=80&auto=format"
-      >
+        alt="Phone repair on a lit workbench"
+        src="https://images.unsplash.com/photo-PZLgTUAhxMM?auto=format&fit=crop&w=1600&q=80" />
 
       <div class="hero-overlay">
         <span class="badge">FEATURE</span>
         <h1 class="hero-title">What is the Right to Repair movement?</h1>
-        <p class="hero-sub">How a single legislation can help reverse environmental damage</p>
+        <p class="hero-sub">How targeted legislation can curb e-waste and extend device lifespans.</p>
         <div class="byline">By R. Correia · 8 min read</div>
       </div>
     </article>
   </section>
 
-  <!-- =========================================
-       MUST READ — Grid of editable cards
-       ========================================= -->
+  <!-- MUST READ -->
   <section class="wrap section">
     <h2 class="section-heading">Must-Read</h2>
 
     <div class="cards-grid">
-      <!-- Large card -->
+      <!-- Card 1 (large) -->
       <article class="story-card story-card--lg">
         <a class="card-link" href="./articles.html#inequality" aria-label="Rising Tides of Inequality"></a>
-        <img loading="lazy" alt="City skyline alongside informal settlements" src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1400&auto=format&fit=crop">
+        <img loading="lazy" alt="City and informal settlements"
+             src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80">
         <div class="card-overlay">
           <span class="badge">ARTICLES</span>
           <h3 class="card-title">Rising Tides of Inequality</h3>
@@ -79,10 +88,11 @@
         </div>
       </article>
 
-      <!-- Standard cards (clone these blocks to add more) -->
+      <!-- Card 2 -->
       <article class="story-card">
         <a class="card-link" href="./articles.html#heritage-retail" aria-label="How heritage retail survives slowdowns"></a>
-        <img loading="lazy" alt="Historic retail facade at dusk" src="https://images.unsplash.com/photo-1488740304459-45c4277fdbb1?q=80&w=1200&auto=format&fit=crop">
+        <img loading="lazy" alt="Historic facade at dusk"
+             src="https://images.unsplash.com/photo-1488740304459-45c4277fdbb1?auto=format&fit=crop&w=1200&q=80">
         <div class="card-overlay">
           <span class="badge">RETAIL</span>
           <h3 class="card-title">How heritage retail survives slowdowns</h3>
@@ -91,9 +101,11 @@
         </div>
       </article>
 
+      <!-- Card 3 -->
       <article class="story-card">
         <a class="card-link" href="./articles.html#quiet-luxury" aria-label="The Allure of Quiet Luxury"></a>
-        <img loading="lazy" alt="Collage suggesting refined minimalism" src="https://images.unsplash.com/photo-1520975922323-364e138278bd?q=80&w=1200&auto=format&fit=crop">
+        <img loading="lazy" alt="Collage of travel and phones"
+             src="https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1200&q=80">
         <div class="card-overlay">
           <span class="badge">STYLE & SOC</span>
           <h3 class="card-title">The Allure of Quiet Luxury</h3>
@@ -102,75 +114,60 @@
         </div>
       </article>
 
+      <!-- Card 4 -->
       <article class="story-card">
-        <a class="card-link" href="./articles.html#personalised-travel" aria-label="Personalised travel recommendations"></a>
-        <img loading="lazy" alt="Travellers using phones on the go" src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?q=80&w=1200&auto=format&fit=crop">
+        <a class="card-link" href="./articles.html#personalised-travel" aria-label="Personalised travel is the new status symbol"></a>
+        <img loading="lazy" alt="People with phones while traveling"
+             src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?auto=format&fit=crop&w=1200&q=80">
         <div class="card-overlay">
           <span class="badge">TECHNOLOGY</span>
           <h3 class="card-title">Personalised travel is the new status symbol</h3>
-          <p class="card-excerpt">Algorithms are curating taste — and class.</p>
+          <p class="card-excerpt">Algorithms are curating taste—and class.</p>
           <div class="byline">By R. Correia · 5 min read</div>
         </div>
       </article>
 
-      <!-- 🔁 TEMPLATE — copy/paste this to add more cards quickly -->
+      <!-- 🔧 Extra cards you can edit quickly (copy/paste as needed) -->
       <article class="story-card">
-        <a class="card-link" href="./articles.html#new-article-slug" aria-label="New Article"></a>
-        <img loading="lazy" alt="Your custom image alt text" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop">
+        <a class="card-link" href="./articles.html#climate-geopolitics" aria-label="The Geopolitics of Climate Action"></a>
+        <img loading="lazy" alt="Wind farm silhouettes"
+             src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80">
         <div class="card-overlay">
-          <span class="badge">CATEGORY</span>
-          <h3 class="card-title">New Article Title</h3>
-          <p class="card-excerpt">Short description goes here…</p>
-          <div class="byline">By R. Correia · X min read</div>
+          <span class="badge">GEOPOLITICS</span>
+          <h3 class="card-title">The Geopolitics of Climate Action</h3>
+          <p class="card-excerpt">Why transition minerals are the new oil.</p>
+          <div class="byline">By R. Correia · 7 min read</div>
         </div>
       </article>
-      <!-- /TEMPLATE -->
+
+      <article class="story-card">
+        <a class="card-link" href="./articles.html#digital-divide" aria-label="Beyond Access: The Digital Divide"></a>
+        <img loading="lazy" alt="Person using laptop at night"
+             src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80">
+        <div class="card-overlay">
+          <span class="badge">INEQUALITY</span>
+          <h3 class="card-title">Beyond Access: The Digital Divide</h3>
+          <p class="card-excerpt">Connectivity doesn’t equal opportunity.</p>
+          <div class="byline">By R. Correia · 5 min read</div>
+        </div>
+      </article>
+
     </div>
   </section>
 </main>
 
-<footer class="ds-footer">
+<footer class="ds-footer" role="contentinfo">
   <div class="wrap">
     <p>© <span id="year"></span> Diluted Stories · <a href="./contact.html">Contact</a></p>
   </div>
 </footer>
 
-<!--App scripts (theme, a11y, footer year)-->
+<script src="./config.js"></script>
+<script src="./scripts.js"></script>
 <script>
-  // Footer year
+  // Page-specific: set year and prep TTS main content
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Respect system preference on first load
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (!localStorage.getItem('ds-theme')) {
-    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-  } else {
-    document.documentElement.setAttribute('data-theme', localStorage.getItem('ds-theme'));
-  }
-
-  // Theme toggle button
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
-    const next = current === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('ds-theme', next);
-  });
-
-  // Accessibility: enlarge text
-  document.getElementById('text-resize').addEventListener('click', () => {
-    document.body.classList.toggle('enlarged-text');
-  });
-
-  // Accessibility: Text-to-speech (basic, whole page)
-  document.getElementById('tts').addEventListener('click', () => {
-    try {
-      window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance(document.body.innerText);
-      speechSynthesis.speak(msg);
-    } catch(e) {
-      alert('Text-to-speech is not supported in this browser.');
-    }
-  });
+  window.A11Y.initTTSTarget('#main-content');
 </script>
 </body>
 </html>
