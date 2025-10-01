@@ -66,6 +66,28 @@
     </div>
   </article>
 </section>
+<!-- === ARTICLE PREVIEW MODAL (HERO ONLY FOR NOW) === -->
+<div id="articleModal" class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="articleTitle" hidden>
+  <div class="ds-modal__scrim" data-close-modal></div>
+
+  <div class="ds-modal__panel" role="document">
+    <div class="ds-modal__bar">
+      <button class="ui-btn" id="btnRead" aria-pressed="false" title="Read this article aloud">🔈 Read</button>
+      <div class="spacer"></div>
+      <button class="ui-btn" id="btnAplus" title="Increase text size" aria-label="Increase text size">A+</button>
+      <button class="ui-btn" id="btnAminus" title="Decrease text size" aria-label="Decrease text size">A−</button>
+      <button class="ui-btn ds-modal__close" data-close-modal aria-label="Close preview">✕</button>
+    </div>
+
+    <article class="ds-article" id="articleContent">
+      <h1 id="articleTitle" class="article-title"></h1>
+      <p class="article-meta muted"></p>
+      <img class="article-hero" alt="">
+      <div class="article-body"></div>
+    </article>
+  </div>
+</div>
+  
 
   <!-- MUST READ -->
   <section class="wrap section">
