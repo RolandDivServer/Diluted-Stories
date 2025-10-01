@@ -1,50 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact · Diluted Stories</title>
   <link rel="stylesheet" href="./styles.css" />
+  <meta name="color-scheme" content="light dark">
 </head>
 <body>
-
-<!-- Top bar -->
+<!--
+  Header: brand centred, same as other pages.
+  Instagram handle moved here with a lightweight preview card + optional embedded post.
+-->
 <header class="ds-header">
-  <div class="wrap">
-    <button class="hamburger" aria-label="Menu">☰</button>
-    <a class="brand" href="/Diluted-Stories/index.html">DILUTED STORIES</a>
-    <nav class="ds-nav">
-  <a href="/Diluted-Stories/articles/">Articles</a>
-  <a href="/Diluted-Stories/contact.html" aria-current="page">Contact</a>
-</nav>
-  </div>
-
-  <div class="wrap ds-subnav">
-    <a href="/Diluted-Stories/articles/#Geopolitics">Geopolitics</a>
-    <a href="/Diluted-Stories/articles/#Sustainability">Sustainability</a>
-    <a href="/Diluted-Stories/articles/#Inequality">Inequality</a>
-    <a href="/Diluted-Stories/articles/#Lifestyle">Lifestyle</a>
-    <a href="/Diluted-Stories/articles/#Fashion">Fashion</a>
+  <div class="wrap header-grid">
+    <div aria-hidden="true"></div>
+    <a class="brand" href="./index.html">DILUTED STORIES</a>
+    <div class="header-right">
+      <nav class="ds-nav" aria-label="Primary">
+        <a href="./articles.html">Articles</a>
+        <a href="./contact.html" aria-current="page">Contact</a>
+      </nav>
+      <div class="a11y-controls">
+        <button id="themeToggle" class="ui-btn" aria-pressed="false" title="Toggle dark or light mode">🌓</button>
+        <button id="textBigger" class="ui-btn" title="Increase text size" aria-label="Increase text size">A+</button>
+        <button id="textSmaller" class="ui-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
+        <button id="ttsToggle" class="ui-btn" aria-pressed="false" title="Read this page aloud">🔈</button>
+      </div>
+    </div>
   </div>
 </header>
 
-<!-- Main content -->
-<main class="wrap" style="padding-top: 24px;">
+<main id="main-content" class="wrap" style="padding-top: 24px;">
   <h1>Contact</h1>
-  <p><strong>Email:</strong> <a href="mailto:management@dilutedstories.com">management@dilutedstories.com</a></p>
-  <p>We want to hear from you.</p>
+  <p>We want to hear from you. Fill the form and one of our team members will get back to you soon.</p>
+
+  <!-- Instagram preview card -->
+  <section aria-labelledby="insta-heading" class="insta-card">
+    <h2 id="insta-heading" class="section-heading">Instagram</h2>
+    <div class="insta-preview">
+      <img alt="Rolly’s Wiki avatar" class="insta-avatar" src="https://avatars.githubusercontent.com/u/1?v=4" onerror="this.style.display='none'">
+      <div class="insta-meta">
+        <a class="insta-handle" href="https://instagram.com/rollyswiki" target="_blank" rel="noopener">@rollyswiki</a>
+        <p class="muted">Fashion · Lifestyle · Edits</p>
+      </div>
+    </div>
+
+    <!-- Optional: embed a specific post for a visual preview. Replace the permalink below with one of your posts. -->
+    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Cx12345678/" data-instgrm-version="14" style="background:transparent; margin: 12px 0;"></blockquote>
+    <script async src="//www.instagram.com/embed.js"></script>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <!--
+    IMPORTANT:
+    - The form POSTs to FORM_ENDPOINT defined in config.js. Set that endpoint to forward to your hidden email.
+    - For file uploads, ensure your chosen service supports multipart/form-data and file fields.
+  -->
+  <form id="contactForm" class="ds-form" novalidate enctype="multipart/form-data" aria-describedby="formTimer">
+    <fieldset>
+      <legend class="sr-only">Contact details</legend>
+      <label>Email address * <input name="email" type="email" required autocomplete="email" /></label>
+      <div class="grid-2">
+        <label>First name * <input name="first_name" type="text" required autocomplete="given-name" /></label>
+        <label>Last name * <input name="last_name" type="text" required autocomplete="family-name" /></label>
+      </div>
+      <label>Company name (optional) <input name="company" type="text" autocomplete="organization" /></label>
+      <label>Contact number * <input name="phone" type="tel" required inputmode="tel" autocomplete="tel" /></label>
+    </fieldset>
+
+    <fieldset>
+      <legend class="sr-only">Message</legend>
+      <label>
+        Additional comments (optional, max 500 words)
+        <textarea id="comments" name="comments" rows="6" placeholder="Tell us more…"></textarea>
+      </label>
+      <div id="wordCounter" class="muted" aria-live="polite">0 / 500 words</div>
+    </fieldset>
+
+    <fieldset>
+      <legend class="sr-only">Attachments</legend>
+
+      <!-- Drag & drop PDF -->
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF by clicking or dragging here">
+        <p class="muted">Drag & drop a PDF here, or click to browse</p>
+        <input id="pdfInput" name="attachment" type="file" accept="application/pdf" hidden />
+      </div>
+      <div id="fileName" class="muted" aria-live="polite"></div>
+    </fieldset>
+
+    <div class="form-actions">
+      <button type="submit" class="cta">Send message</button>
+      <p id="formStatus" class="muted" role="status" aria-live="polite"></p>
+    </div>
+
+    <!-- Gentle countdown at the bottom of the form (not distracting) -->
+    <div id="formTimer" class="form-timer muted" aria-live="polite">Session timer: 05:00</div>
+  </form>
+
+  <!-- Success message -->
+  <div id="thankYou" class="thankyou" hidden>
+    <h2>Thank you for completing the form</h2>
+    <p>One of our team members will get back to you soon.</p>
+  </div>
 </main>
 
-<!-- Footer -->
 <footer class="site-footer">
   <div class="wrap">
     <p>© <span id="year"></span> Diluted Stories</p>
   </div>
 </footer>
 
+<script src="./config.js"></script>
+<script src="./scripts.js"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+  window.A11Y.initTTSTarget('#main-content');
+  window.Forms.initContactForm({
+    formId: 'contactForm',
+    commentSelector: '#comments',
+    counterSelector: '#wordCounter',
+    dropzoneId: 'dropzone',
+    fileInputId: 'pdfInput',
+    fileNameId: 'fileName',
+    statusId: 'formStatus',
+    timerId: 'formTimer',
+    thankYouId: 'thankYou'
+  });
 </script>
-
 </body>
 </html>
