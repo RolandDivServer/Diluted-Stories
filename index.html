@@ -66,7 +66,7 @@
     </div>
   </article>
 </section>
-<!-- === ARTICLE PREVIEW MODAL (HERO ONLY FOR NOW) === -->
+<!--  ARTICLE PREVIEW MODAL (HERO ONLY FOR NOW)  -->
 <div id="articleModal" class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="articleTitle" hidden>
   <div class="ds-modal__scrim" data-close-modal></div>
 
@@ -87,7 +87,7 @@
     </article>
   </div>
 </div>
-  <!-- === ARTICLE DATA FOR HERO PREVIEW === -->
+  <!--  ARTICLE DATA FOR HERO PREVIEW  -->
 <template id="tpl-right-to-repair">
 {
   "title": "What is the Right to Repair movement?",
@@ -103,6 +103,48 @@
   ]
 }
 </template>
+
+<!-- PREVIEW DATA: The cost of betting against the stock market -->
+<template id="tpl-cost-of-betting">
+{
+  "title": "The cost of betting against the stock market",
+  "meta": "By R. Correia · 6 min read",
+  "imgAlt": "Red stock chart on a trading screen",
+  "imgSrc": "https://images.unsplash.com/photo-1549421263-3c8b5f69f4c1?auto=format&fit=crop&w=1600&q=80",
+  "body": [
+    "<p>Shorting looks attractive in drawdowns, but indices have an upward drift and compounding works against shorts.</p>",
+    "<h3>Why most retail shorts lose</h3>",
+    "<ul>",
+      "<li>Baseline market drift is up; timing has to be perfect.</li>",
+      "<li>Volatility spikes and margin calls force exits early.</li>",
+      "<li>Spreads, fees and financing erode returns quietly.</li>",
+    "</ul>",
+    "<p>For most investors, risk sizing and diversification beat outright directional shorts.</p>"
+  ]
+}
+</template>
+
+<!-- PREVIEW DATA: Quiet luxury -->
+<template id="tpl-quiet-luxury">
+{
+  "title": "Quiet luxury",
+  "meta": "By R. Correia · 6 min read",
+  "imgAlt": "Refined boutique aesthetic",
+  "imgSrc": "https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1600&q=80",
+  "body": [
+    "<p>Quiet luxury values craft over noise: natural fibres, hand-finished details, muted palettes. Heritage retail survives slowdowns by leaning into those values while updating formats and service.</p>",
+    "<h3>Playbook</h3>",
+    "<ul>",
+      "<li><strong>Edit over excess:</strong> tighter assortments and seasonal capsules.</li>",
+      "<li><strong>Service as moat:</strong> alterations, repair and clienteling.</li>",
+      "<li><strong>Right-sized stores:</strong> smaller footprints with better product storytelling.</li>",
+      "<li><strong>Digital craft:</strong> calm UX, fast pages, clear imagery.</li>",
+    "</ul>",
+    "<p>The mix of restraint and service builds trust — and keeps legacy houses resilient when footfall and ad spend tighten.</p>"
+  ]
+}
+</template>
+
   <script>
 (function(){
   // Simple, page-local font scaling for the article body
@@ -170,7 +212,7 @@
     const a = e.target.closest('a.card-link');
     if(!a) return;
     const href = a.getAttribute('href') || '';
-    if(href === '#right-to-repair'){
+    if(href  '#right-to-repair'){
       e.preventDefault();
       openPreview('right-to-repair');
       history.pushState(null, '', '#right-to-repair');
@@ -178,7 +220,7 @@
   });
 
   // Open directly if the page loads with the hash
-  if (location.hash === '#right-to-repair'){
+  if (location.hash  '#right-to-repair'){
     window.requestAnimationFrame(() => openPreview('right-to-repair'));
   }
 
@@ -188,7 +230,7 @@
       closePreview();
     }
   });
-  window.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !document.getElementById('articleModal').hidden) closePreview(); });
+  window.addEventListener('keydown', (e) => { if(e.key  'Escape' && !document.getElementById('articleModal').hidden) closePreview(); });
   window.addEventListener('hashchange', () => {
     if(location.hash !== '#right-to-repair' && !document.getElementById('articleModal').hidden) closePreview();
   });
@@ -215,7 +257,7 @@
       
       <!-- Card 2 -->
 <article class="story-card">
-  <a class="card-link" href="#quiet-luxary" aria-label="The allure of quiet luxury brands."></a>
+  <a class="card-link" href="#quiet-luxury" aria-label="The allure of quiet luxury brands."></a>
   <img
     loading="lazy" alt="Drivers' side view of Bentley" src="https://images.unsplash.com/photo-1655820871340-2de5a2e76c84">
   <div class="card-overlay">
@@ -228,7 +270,7 @@
 
       <!-- Card 3 -->
       <article class="story-card">
-        <a class="card-link" href="./articles.html#personalised-travel" aria-label="Personalised travel is the new status symbol"></a>
+        <a class="card-link" href="#travel" aria-label="Personalised travel is the new status symbol"></a>
         <img loading="lazy" alt="People with phones while traveling"
              src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?auto=format&fit=crop&w=1200&q=80">
         <div class="card-overlay">
@@ -241,7 +283,7 @@
 
       <!-- Extra cards you can edit quickly (copy/paste as needed) -->
       <article class="story-card">
-        <a class="card-link" href="./articles.html#climate-geopolitics" aria-label="The Geopolitics of Climate Action"></a>
+        <a class="card-link" href="#geopolitics" aria-label="The Geopolitics of Climate Action"></a>
         <img loading="lazy" alt="Wind farm silhouettes"
              src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80">
         <div class="card-overlay">
