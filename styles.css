@@ -173,11 +173,5 @@ a:focus-visible{ outline:2px solid #4b8df8; outline-offset:2px }
 .dropzone.dragover{ background:rgba(0,0,0,.03); border-color:#4b8df8 }
 #fileName{ margin-top:8px }
 
-/* INSTAGRAM PREVIEW */
-.insta-card{ margin:20px 0 30px }
-.insta-preview{ display:flex; align-items:center; gap:12px }
-.insta-avatar{ width:44px; height:44px; border-radius:50%; border:1px solid var(--rule); object-fit:cover }
-.insta-handle{ font-weight:700; text-decoration:underline }
-
 /* THANK YOU */
 .thankyou{ border:1px solid var(--rule); border-radius:12px; padding:16px; background:rgba(0,0,0,.02) }
