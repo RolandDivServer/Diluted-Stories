@@ -13,108 +13,69 @@
     <div aria-hidden="true"></div>
     <a class="brand" href="./index.html">DILUTED STORIES</a>
     <div class="header-right">
-      <nav class="ds-nav" aria-label="Primary">
+      <nav class="ds-nav">
         <a href="./articles.html" aria-current="page">Articles</a>
         <a href="./contact.html">Contact</a>
       </nav>
       <div class="a11y-controls">
-        <button id="themeToggle" class="ui-btn" aria-pressed="false" title="Toggle dark or light mode">🌓</button>
-        <button id="textBigger" class="ui-btn" title="Increase text size" aria-label="Increase text size">A+</button>
-        <button id="textSmaller" class="ui-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
-        <button id="ttsToggle" class="ui-btn" aria-pressed="false" title="Read this page aloud">🔈</button>
+        <button id="themeToggle" class="ui-btn">🌓</button>
+        <button id="textBigger" class="ui-btn">A+</button>
+        <button id="textSmaller" class="ui-btn">A−</button>
+        <button id="ttsToggle" class="ui-btn">🔈</button>
       </div>
     </div>
   </div>
 </header>
 
-<main id="main-content">
-  <section class="wrap section">
-    <h1 class="page-title">Articles</h1>
-
-    <!--
-      One place for ALL articles moving forward.
-      To remove subfolders like "fashion/", put every article file here and link directly.
-      Keep bylines as "By R. Correia" for consistency.
-    -->
-
-    <div class="cards-grid">
-
-      <article id="right-to-repair" class="story-card story-card--lg">
-        <a class="card-link" href="#" aria-label="Right to Repair (placeholder; wire to article page)"></a>
-        <img loading="lazy" alt="Phone repair on a lit workbench"
-             src="https://images.unsplash.com/photo-PZLgTUAhxMM?auto=format&fit=crop&w=1400&q=80">
-        <div class="card-overlay">
-          <span class="badge">SUSTAINABILITY</span>
-          <h3 class="card-title">What is the Right to Repair movement?</h3>
-          <p class="card-excerpt">How targeted legislation can curb e-waste and extend device lifespans.</p>
-          <div class="byline">By R. Correia · 8 min read</div>
-        </div>
-      </article>
-
-      <article id="inequality" class="story-card">
-        <a class="card-link" href="#" aria-label="Rising Tides of Inequality"></a>
-        <img loading="lazy" alt="City and informal settlements"
-             src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80">
-        <div class="card-overlay">
-          <span class="badge">ARTICLES</span>
-          <h3 class="card-title">Rising Tides of Inequality</h3>
-          <p class="card-excerpt">A visual deep dive into the global wealth gap post-COVID.</p>
-          <div class="byline">By R. Correia · 6 min read</div>
-        </div>
-      </article>
-
-      <article id="heritage-retail" class="story-card">
-        <a class="card-link" href="#" aria-label="Heritage Retail"></a>
-        <img loading="lazy" alt="Historic facade at dusk"
-             src="https://images.unsplash.com/photo-1488740304459-45c4277fdbb1?auto=format&fit=crop&w=1200&q=80">
-        <div class="card-overlay">
-          <span class="badge">RETAIL</span>
-          <h3 class="card-title">How heritage retail survives slowdowns</h3>
-          <p class="card-excerpt">What strategy shifts keep legacy stores resilient.</p>
-          <div class="byline">By R. Correia · 5 min read</div>
-        </div>
-      </article>
-
-      <article id="quiet-luxury" class="story-card">
-        <a class="card-link" href="#" aria-label="Quiet Luxury"></a>
-        <img loading="lazy" alt="Lifestyle collage"
-             src="https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1200&q=80">
-        <div class="card-overlay">
-          <span class="badge">STYLE & SOC</span>
-          <h3 class="card-title">The Allure of Quiet Luxury</h3>
-          <p class="card-excerpt">Why minimalism is the new status code.</p>
-          <div class="byline">By R. Correia · 4 min read</div>
-        </div>
-      </article>
-
-      <article id="personalised-travel" class="story-card">
-        <a class="card-link" href="#" aria-label="Personalised travel"></a>
-        <img loading="lazy" alt="Travel and phones"
-             src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?auto=format&fit=crop&w=1200&q=80">
-        <div class="card-overlay">
-          <span class="badge">TECHNOLOGY</span>
-          <h3 class="card-title">Personalised travel is the new status symbol</h3>
-          <p class="card-excerpt">Algorithms are curating taste—and class.</p>
-          <div class="byline">By R. Correia · 5 min read</div>
-        </div>
-      </article>
-
-      <!-- Add more articles by duplicating a card and updating IDs, text, and image -->
-    </div>
-  </section>
+<main id="main-content" class="wrap section">
+  <h1 class="page-title">Articles</h1>
+  <div id="articlesGrid" class="cards-grid"></div>
 </main>
 
-<footer class="ds-footer">
-  <div class="wrap">
-    <p>© <span id="year"></span> Diluted Stories · <a href="./contact.html">Contact</a></p>
+<!-- Reuse the same modal -->
+<div id="articleModal" class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="articleTitle" hidden>
+  <div class="ds-modal__scrim" data-close-modal></div>
+  <div class="ds-modal__panel" role="document" tabindex="-1">
+    <button class="ds-modal__close ui-btn" data-close-modal aria-label="Close preview">✕</button>
+    <article class="ds-article" id="articleContent">
+      <h1 id="articleTitle" class="article-title"></h1>
+      <p class="article-meta muted"></p>
+      <img class="article-hero" alt="">
+      <div class="article-body"></div>
+    </article>
   </div>
-</footer>
+</div>
 
 <script src="./config.js"></script>
 <script src="./scripts.js"></script>
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-  window.A11Y.initTTSTarget('#main-content');
+  // Render article cards from the templates already present on index.html.
+  // If templates also live here, it will pick them up too.
+  (function renderFromTemplates(){
+    const grid = document.getElementById('articlesGrid');
+    const tpls = Array.from(document.querySelectorAll('template[id^="tpl-"]'));
+    if (!tpls.length) {
+      // If templates exist only on index.html, define a small list here to show something
+      console.warn('No templates found on this page. Consider duplicating your <template> blocks here.');
+      return;
+    }
+    tpls.forEach(t => {
+      const id = t.id.replace(/^tpl-/, '');
+      let data; try { data = JSON.parse(t.innerHTML.trim()); } catch { return; }
+      const card = document.createElement('article');
+      card.className = 'story-card';
+      card.innerHTML = `
+        <a class="card-link" href="#${id}" aria-label="${data.title || 'Read article'}"></a>
+        <img loading="lazy" alt="${data.imgAlt || ''}" src="${data.imgSrc || ''}">
+        <div class="card-overlay">
+          <span class="badge">ARTICLES</span>
+          <h3 class="card-title">${data.title || ''}</h3>
+          <p class="card-excerpt">${(data.body && data.body[0]) ? data.body[0].replace(/<[^>]*>/g,'').slice(0,110)+'…' : ''}</p>
+          <div class="byline">${data.meta || 'By R. Correia'}</div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  })();
 </script>
 </body>
 </html>
