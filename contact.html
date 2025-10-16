@@ -1,16 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact · Diluted Stories</title>
   <link rel="stylesheet" href="./styles.css" />
   <meta name="color-scheme" content="light dark">
 </head>
 <body>
-<!--
-  Header: brand centred, same as other pages.
--->
 <header class="ds-header">
   <div class="wrap header-grid">
     <div aria-hidden="true"></div>
@@ -21,10 +18,10 @@
         <a href="./contact.html" aria-current="page">Contact</a>
       </nav>
       <div class="a11y-controls">
-        <button id="themeToggle" class="ui-btn" aria-pressed="false" title="Toggle dark or light mode">🌓</button>
-        <button id="textBigger" class="ui-btn" title="Increase text size" aria-label="Increase text size">A+</button>
-        <button id="textSmaller" class="ui-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
-        <button id="ttsToggle" class="ui-btn" aria-pressed="false" title="Read this page aloud">🔈</button>
+        <button id="themeToggle" class="ui-btn">🌓</button>
+        <button id="textBigger" class="ui-btn">A+</button>
+        <button id="textSmaller" class="ui-btn">A−</button>
+        <button id="ttsToggle" class="ui-btn">🔈</button>
       </div>
     </div>
   </div>
@@ -34,14 +31,7 @@
   <h1>Contact</h1>
   <p>We want to hear from you. Fill the form and one of our team members will get back to you soon.</p>
 
-
-  <!-- CONTACT FORM -->
-  <!--
-    IMPORTANT:
-    - The form POSTs to FORM_ENDPOINT defined in config.js. Set that endpoint to forward to your hidden email.
-    - For file uploads, ensure your chosen service supports multipart/form-data and file fields.
-  -->
-  <form id="contactForm" class="ds-form" novalidate enctype="multipart/form-data" aria-describedby="formTimer">
+  <form id="contactForm" class="ds-form" novalidate>
     <fieldset>
       <legend class="sr-only">Contact details</legend>
       <label>Email address * <input name="email" type="email" required autocomplete="email" /></label>
@@ -62,30 +52,19 @@
       <div id="wordCounter" class="muted" aria-live="polite">0 / 500 words</div>
     </fieldset>
 
-    <fieldset>
-      <legend class="sr-only">Attachments</legend>
-
-      <!-- Drag & drop PDF -->
-      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload PDF by clicking or dragging here">
-        <p class="muted">Drag & drop a PDF here, or click to browse</p>
-        <input id="pdfInput" name="attachment" type="file" accept="application/pdf" hidden />
-      </div>
-      <div id="fileName" class="muted" aria-live="polite"></div>
-    </fieldset>
+    <!-- Upload removed by request -->
 
     <div class="form-actions">
       <button type="submit" class="cta">Send message</button>
       <p id="formStatus" class="muted" role="status" aria-live="polite"></p>
     </div>
 
-    <!-- Gentle countdown at the bottom of the form (not distracting) -->
-    <div id="formTimer" class="form-timer muted" aria-live="polite">Session timer: 10:00</div>
+    <div id="formTimer" class="form-timer muted" aria-live="polite">Session timer: 05:00</div>
   </form>
 
-  <!-- Success message -->
   <div id="thankYou" class="thankyou" hidden>
-    <h2>Thank you for completing the form</h2>
-    <p>One of our team members will get back to you soon.</p>
+    <h2>Thank you for contacting us</h2>
+    <p>Your message was sent successfully. One of our team members will get back to you soon.</p>
   </div>
 </main>
 
@@ -104,9 +83,6 @@
     formId: 'contactForm',
     commentSelector: '#comments',
     counterSelector: '#wordCounter',
-    dropzoneId: 'dropzone',
-    fileInputId: 'pdfInput',
-    fileNameId: 'fileName',
     statusId: 'formStatus',
     timerId: 'formTimer',
     thankYouId: 'thankYou'
