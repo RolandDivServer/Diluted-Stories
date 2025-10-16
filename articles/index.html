@@ -13,7 +13,7 @@
     <div aria-hidden="true"></div>
     <a class="brand" href="./index.html">DILUTED STORIES</a>
     <div class="header-right">
-      <nav class="ds-nav">
+      <nav class="ds-nav" aria-label="Primary">
         <a href="./articles.html" aria-current="page">Articles</a>
         <a href="./contact.html">Contact</a>
       </nav>
@@ -32,11 +32,21 @@
   <div id="articlesGrid" class="cards-grid"></div>
 </main>
 
-<!-- Reuse the same modal -->
+<footer class="ds-footer">
+  <div class="wrap"><p>© <span id="year"></span> Diluted Stories</p></div>
+</footer>
+
+<!-- Shared modal -->
 <div id="articleModal" class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="articleTitle" hidden>
   <div class="ds-modal__scrim" data-close-modal></div>
   <div class="ds-modal__panel" role="document" tabindex="-1">
-    <button class="ds-modal__close ui-btn" data-close-modal aria-label="Close preview">✕</button>
+    <div class="ds-modal__bar">
+      <button class="ui-btn" id="btnRead" aria-pressed="false">🔈 Read</button>
+      <div class="spacer"></div>
+      <button class="ui-btn" id="btnAplus">A+</button>
+      <button class="ui-btn" id="btnAminus">A−</button>
+      <button class="ui-btn ds-modal__close" data-close-modal aria-label="Close">✕</button>
+    </div>
     <article class="ds-article" id="articleContent">
       <h1 id="articleTitle" class="article-title"></h1>
       <p class="article-meta muted"></p>
@@ -49,112 +59,23 @@
 <script src="./config.js"></script>
 <script src="./scripts.js"></script>
 <script>
-  /* In-page article preview (works site-wide) ===== */
-(function(){
-  function $(s){ return document.querySelector(s); }
-  function getTpl(id){
-    const t = document.getElementById('tpl-' + id);
-    if(!t) return null;
-    try { return JSON.parse(t.innerHTML.trim()); } catch(e){ console.warn('Bad JSON in', t.id); return null; }
-  }
+  document.getElementById('year').textContent = new Date().getFullYear();
+  window.A11Y.initTTSTarget('#main-content');
 
-  // Minimal TTS
-  const TTS = {
-    on:false, u:null,
-    read(text){
-      if(!('speechSynthesis' in window)) { alert('TTS not supported.'); return; }
-      if(this.on){ speechSynthesis.cancel(); this.on=false; return; }
-      this.u = new SpeechSynthesisUtterance(text); this.u.rate = 1.0;
-      speechSynthesis.speak(this.u); this.on=true; this.u.onend=()=>this.on=false;
-    },
-    stop(){ if(this.on) { speechSynthesis.cancel(); this.on=false; } }
-  };
-
-  let scale = 1, prevFocus = null;
-
-  function openPreview(id){
-    const d = getTpl(id); if(!d) return;
-    $('#articleTitle').textContent = d.title || '';
-    $('#articleContent .article-meta').textContent = d.meta || '';
-    const img = $('#articleContent .article-hero');
-    img.alt = d.imgAlt || ''; img.src = d.imgSrc || '';
-    $('#articleContent .article-body').innerHTML = (d.body||[]).join('');
-
-    // reset text scale
-    scale = 1; $('#articleContent .article-body').style.fontSize = '1rem';
-
-    const modal = $('#articleModal');
-    modal.hidden = false;
-    document.body.classList.add('modal-open');                 // lock background
-    const panel = modal.querySelector('.ds-modal__panel');
-    panel.focus({ preventScroll:true });                       // focus into panel
-    prevFocus = document.activeElement;
-
-    // wire quick controls if present on page
-    const btnRead = document.getElementById('btnRead');
-    const btnPlus = document.getElementById('btnAplus');
-    const btnMinus = document.getElementById('btnAminus');
-    if (btnRead) btnRead.onclick = () => TTS.read($('#articleContent').innerText);
-    if (btnPlus) btnPlus.onclick = () => { scale=Math.min(1.4, scale+0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; };
-    if (btnMinus) btnMinus.onclick = () => { scale=Math.max(0.9, scale-0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; };
-  }
-
-  function closePreview(){
-    $('#articleModal').hidden = true;
-    document.body.classList.remove('modal-open');
-    TTS.stop();
-    if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
-    if (location.hash) history.pushState('', document.title, location.pathname + location.search);
-  }
-
-  // open by clicking any .card-link with a hash
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a.card-link'); if(!a) return;
-    const h = a.getAttribute('href') || '';
-    if (!h.startsWith('#')) return; // external links unaffected
-    e.preventDefault();
-    const id = h.slice(1);
-    openPreview(id);
-    history.pushState(null, '', h);
-  });
-
-  // close handlers
-  $('#articleModal')?.addEventListener('click', (e) => {
-    if (e.target.matches('[data-close-modal]') || e.target.classList.contains('ds-modal__scrim')) closePreview();
-  });
-  window.addEventListener('keydown', (e) => { if(e.key==='Escape' && !$('#articleModal').hidden) closePreview(); });
-
-  // deep-link open
-  if (location.hash) window.requestAnimationFrame(() => openPreview(location.hash.slice(1)));
-  window.addEventListener('hashchange', () => {
-    const id = location.hash.slice(1);
-    if (!id) return closePreview();
-    openPreview(id);
-  });
-})();
-  // Render article cards from the templates already present on index.html.
-  // If templates also live here, it will pick them up too.
-  (function renderFromTemplates(){
+  // Auto-render cards from the central ARTICLES dataset
+  (function(){
     const grid = document.getElementById('articlesGrid');
-    const tpls = Array.from(document.querySelectorAll('template[id^="tpl-"]'));
-    if (!tpls.length) {
-      // If templates exist only on index.html, define a small list here to show something
-      console.warn('No templates found on this page. Consider duplicating your <template> blocks here.');
-      return;
-    }
-    tpls.forEach(t => {
-      const id = t.id.replace(/^tpl-/, '');
-      let data; try { data = JSON.parse(t.innerHTML.trim()); } catch { return; }
+    Object.entries(window.ARTICLES).forEach(([id, a]) => {
       const card = document.createElement('article');
       card.className = 'story-card';
       card.innerHTML = `
-        <a class="card-link" href="#${id}" aria-label="${data.title || 'Read article'}"></a>
-        <img loading="lazy" alt="${data.imgAlt || ''}" src="${data.imgSrc || ''}">
+        <a class="card-link" href="#${id}" aria-label="${a.title}"></a>
+        <img loading="lazy" alt="${a.imgAlt}" src="${a.imgSrc}">
         <div class="card-overlay">
           <span class="badge">ARTICLES</span>
-          <h3 class="card-title">${data.title || ''}</h3>
-          <p class="card-excerpt">${(data.body && data.body[0]) ? data.body[0].replace(/<[^>]*>/g,'').slice(0,110)+'…' : ''}</p>
-          <div class="byline">${data.meta || 'By R. Correia'}</div>
+          <h3 class="card-title">${a.title}</h3>
+          <p class="card-excerpt">${a.excerpt || ''}</p>
+          <div class="byline">${a.meta}</div>
         </div>`;
       grid.appendChild(card);
     });
