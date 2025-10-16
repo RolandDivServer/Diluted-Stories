@@ -49,6 +49,89 @@
 <script src="./config.js"></script>
 <script src="./scripts.js"></script>
 <script>
+  /* In-page article preview (works site-wide) ===== */
+(function(){
+  function $(s){ return document.querySelector(s); }
+  function getTpl(id){
+    const t = document.getElementById('tpl-' + id);
+    if(!t) return null;
+    try { return JSON.parse(t.innerHTML.trim()); } catch(e){ console.warn('Bad JSON in', t.id); return null; }
+  }
+
+  // Minimal TTS
+  const TTS = {
+    on:false, u:null,
+    read(text){
+      if(!('speechSynthesis' in window)) { alert('TTS not supported.'); return; }
+      if(this.on){ speechSynthesis.cancel(); this.on=false; return; }
+      this.u = new SpeechSynthesisUtterance(text); this.u.rate = 1.0;
+      speechSynthesis.speak(this.u); this.on=true; this.u.onend=()=>this.on=false;
+    },
+    stop(){ if(this.on) { speechSynthesis.cancel(); this.on=false; } }
+  };
+
+  let scale = 1, prevFocus = null;
+
+  function openPreview(id){
+    const d = getTpl(id); if(!d) return;
+    $('#articleTitle').textContent = d.title || '';
+    $('#articleContent .article-meta').textContent = d.meta || '';
+    const img = $('#articleContent .article-hero');
+    img.alt = d.imgAlt || ''; img.src = d.imgSrc || '';
+    $('#articleContent .article-body').innerHTML = (d.body||[]).join('');
+
+    // reset text scale
+    scale = 1; $('#articleContent .article-body').style.fontSize = '1rem';
+
+    const modal = $('#articleModal');
+    modal.hidden = false;
+    document.body.classList.add('modal-open');                 // lock background
+    const panel = modal.querySelector('.ds-modal__panel');
+    panel.focus({ preventScroll:true });                       // focus into panel
+    prevFocus = document.activeElement;
+
+    // wire quick controls if present on page
+    const btnRead = document.getElementById('btnRead');
+    const btnPlus = document.getElementById('btnAplus');
+    const btnMinus = document.getElementById('btnAminus');
+    if (btnRead) btnRead.onclick = () => TTS.read($('#articleContent').innerText);
+    if (btnPlus) btnPlus.onclick = () => { scale=Math.min(1.4, scale+0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; };
+    if (btnMinus) btnMinus.onclick = () => { scale=Math.max(0.9, scale-0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; };
+  }
+
+  function closePreview(){
+    $('#articleModal').hidden = true;
+    document.body.classList.remove('modal-open');
+    TTS.stop();
+    if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+    if (location.hash) history.pushState('', document.title, location.pathname + location.search);
+  }
+
+  // open by clicking any .card-link with a hash
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a.card-link'); if(!a) return;
+    const h = a.getAttribute('href') || '';
+    if (!h.startsWith('#')) return; // external links unaffected
+    e.preventDefault();
+    const id = h.slice(1);
+    openPreview(id);
+    history.pushState(null, '', h);
+  });
+
+  // close handlers
+  $('#articleModal')?.addEventListener('click', (e) => {
+    if (e.target.matches('[data-close-modal]') || e.target.classList.contains('ds-modal__scrim')) closePreview();
+  });
+  window.addEventListener('keydown', (e) => { if(e.key==='Escape' && !$('#articleModal').hidden) closePreview(); });
+
+  // deep-link open
+  if (location.hash) window.requestAnimationFrame(() => openPreview(location.hash.slice(1)));
+  window.addEventListener('hashchange', () => {
+    const id = location.hash.slice(1);
+    if (!id) return closePreview();
+    openPreview(id);
+  });
+})();
   // Render article cards from the templates already present on index.html.
   // If templates also live here, it will pick them up too.
   (function renderFromTemplates(){
