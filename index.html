@@ -5,40 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Diluted Stories</title>
   <meta name="description" content="Unfiltered perspectives on power, poverty & society." />
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
-
-  <!-- Prefer light/dark colour in browser UI -->
   <meta name="color-scheme" content="light dark">
 </head>
 <body>
-<!--
-  HEADER
-  - Brand is perfectly centered via a 3-column grid.
-  - Right side: navigation + controls (Theme, Text size, Read Aloud).
--->
 <header class="ds-header" role="banner">
   <div class="wrap header-grid">
-    <!-- Left spacer for centering grid -->
     <div aria-hidden="true"></div>
-
-    <!-- Centered brand -->
     <a class="brand" href="./index.html">DILUTED STORIES</a>
-
-    <!-- Right: nav + controls -->
     <div class="header-right">
       <nav class="ds-nav" aria-label="Primary">
         <a href="./articles.html">Articles</a>
         <a href="./contact.html">Contact</a>
       </nav>
-
       <div class="a11y-controls" aria-label="Accessibility and theme controls">
-        <button id="themeToggle" class="ui-btn" aria-pressed="false" title="Toggle dark or light mode">🌓</button>
+        <button id="themeToggle" class="ui-btn" aria-pressed="false" title="Toggle dark/light">🌓</button>
         <button id="textBigger" class="ui-btn" title="Increase text size" aria-label="Increase text size">A+</button>
         <button id="textSmaller" class="ui-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
-        <button id="ttsToggle" class="ui-btn" aria-pressed="false" title="Read this page aloud">🔈</button>
+        <button id="ttsToggle" class="ui-btn" aria-pressed="false" title="Read page aloud">🔈</button>
       </div>
     </div>
   </div>
@@ -46,325 +31,50 @@
 
 <main id="main-content">
   <!-- HERO -->
-<section class="wrap hero-spot">
-  <article class="hero-card">
-    <!-- Open the in-page preview instead of redirecting -->
-    <a class="card-link" href="#right-to-repair" aria-label="Read: What is the Right to Repair movement?"></a>
-
-    <!-- Use a reliable Unsplash Source URL -->
-    <img
-      loading="lazy"
-      alt="Phone repair on a lit workbench"
-      src="https://images.unsplash.com/photo-1576613109753-27804de2cba8?"
-    >
-
-    <div class="hero-overlay">
-      <span class="badge">FEATURE</span>
-      <h1 class="hero-title">What is the Right to Repair movement?</h1>
-      <p class="hero-sub">How targeted legislation can curb e-waste and extend device lifespans.</p>
-      <div class="byline">By R. Correia · 8 min read</div>
-    </div>
-  </article>
-</section>
-<!--  ARTICLE PREVIEW MODAL (HERO ONLY FOR NOW)  -->
-<div id="articleModal" class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="articleTitle" hidden>
-  <div class="ds-modal__scrim" data-close-modal></div>
-
-  <div class="ds-modal__bar">
-  <button class="ui-btn" id="btnRead" aria-pressed="false">🔈 Read</button>
-  <div class="spacer"></div>
-  <button class="ui-btn" id="btnAplus">A+</button>
-  <button class="ui-btn" id="btnAminus">A−</button>
-  <button class="ui-btn ds-modal__close" data-close-modal aria-label="Close">✕</button>
-</div>
-
-    <article class="ds-article" id="articleContent">
-      <h1 id="articleTitle" class="article-title"></h1>
-      <p class="article-meta muted"></p>
-      <img class="article-hero" alt="">
-      <div class="article-body"></div>
+  <section class="wrap hero-spot">
+    <article class="hero-card story-card--lg">
+      <a class="card-link" href="#right-to-repair" aria-label="Read: What is the Right to Repair movement?"></a>
+      <img loading="lazy" alt="Phone repair on a lit workbench"
+           src="https://source.unsplash.com/PZLgTUAhxMM/1600x900">
+      <div class="hero-overlay">
+        <span class="badge">FEATURE</span>
+        <h1 class="hero-title">What is the Right to Repair movement?</h1>
+        <p class="hero-sub">How targeted legislation can curb e-waste and extend device lifespans.</p>
+        <div class="byline">By R. Correia · 8 min read</div>
+      </div>
     </article>
-  </div>
-</div>
-  <!--  ARTICLE DATA FOR HERO PREVIEW  -->
-<template id="tpl-right-to-repair">
-{
-  "title": "What is the Right to Repair movement?",
-  "meta": "By R. Correia · 8 min read",
-  "imgAlt": "Phone repair on a lit workbench",
-"imgSrc": "https://source.unsplash.com/PZLgTUAhxMM/1600x900",
-  "body": [
-    "<p>The Right to Repair movement argues that consumers and independent repairers should have practical access to parts, tools, manuals and diagnostics needed to fix modern devices.</p>",
-    "<p>Supporters say this extends product lifespans, cuts e-waste and lowers costs for households and small businesses while keeping local repair economies alive.</p>",
-    "<h3>Why it matters</h3>",
-    "<ul><li>Less e-waste → lower environmental impact.</li><li>Cheaper fixes and longer device lifespans.</li><li>More competition and innovation in repair services.</li></ul>",
-    "<p>Several regions are exploring or adopting frameworks that compel manufacturers to provide documentation and reasonably priced parts. Enforcement details vary, but the direction of travel is clear: repair should be a right, not a privilege.</p>"
-  ]
-}
-</template>
-
-<!-- PREVIEW DATA: The cost of betting against the stock market -->
-<template id="tpl-cost-of-betting">
-{
-  "title": "The cost of betting against the stock market",
-  "meta": "By R. Correia · 6 min read",
-  "imgAlt": "Red stock chart on a trading screen",
-  "imgSrc": "https://images.unsplash.com/photo-1549421263-3c8b5f69f4c1?auto=format&fit=crop&w=1600&q=80",
-  "body": [
-    "<p>Shorting looks attractive in drawdowns, but indices have an upward drift and compounding works against shorts.</p>",
-    "<h3>Why most retail shorts lose</h3>",
-    "<ul>",
-      "<li>Baseline market drift is up; timing has to be perfect.</li>",
-      "<li>Volatility spikes and margin calls force exits early.</li>",
-      "<li>Spreads, fees and financing erode returns quietly.</li>",
-    "</ul>",
-    "<p>For most investors, risk sizing and diversification beat outright directional shorts.</p>"
-  ]
-}
-</template>
-
-<!-- PREVIEW DATA: Quiet luxury -->
-<template id="tpl-quiet-luxury">
-{
-  "title": "Quiet luxury",
-  "meta": "By R. Correia · 6 min read",
-  "imgAlt": "Refined boutique aesthetic",
-  "imgSrc": "https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1600&q=80",
-  "body": [
-    "<p>Quiet luxury values craft over noise: natural fibres, hand-finished details, muted palettes. Heritage retail survives slowdowns by leaning into those values while updating formats and service.</p>",
-    "<h3>Playbook</h3>",
-    "<ul>",
-      "<li><strong>Edit over excess:</strong> tighter assortments and seasonal capsules.</li>",
-      "<li><strong>Service as moat:</strong> alterations, repair and clienteling.</li>",
-      "<li><strong>Right-sized stores:</strong> smaller footprints with better product storytelling.</li>",
-      "<li><strong>Digital craft:</strong> calm UX, fast pages, clear imagery.</li>",
-    "</ul>",
-    "<p>The mix of restraint and service builds trust — and keeps legacy houses resilient when footfall and ad spend tighten.</p>"
-  ]
-}
-</template>
-
-  <script>
-(function(){
-  // Simple, page-local font scaling for the article body
-  let scale = 1;
-
-  function $(sel){ return document.querySelector(sel); }
-  function getTpl(id){
-    const t = document.getElementById('tpl-' + id);
-    if(!t) return null;
-    try { return JSON.parse(t.innerHTML.trim()); } catch(e){ return null; }
-  }
-
-  // Minimal TTS using Web Speech API
-  const TTS = {
-    speaking: false,
-    utterance: null,
-    toggle(text){
-      if(!('speechSynthesis' in window)){ alert('Text-to-speech not supported.'); return; }
-      if(this.speaking){ window.speechSynthesis.cancel(); this.speaking=false; $('#btnRead').setAttribute('aria-pressed','false'); return; }
-      this.utterance = new SpeechSynthesisUtterance(text);
-      this.utterance.rate = 1.0;
-      window.speechSynthesis.speak(this.utterance);
-      this.speaking = true;
-      $('#btnRead').setAttribute('aria-pressed','true');
-      this.utterance.onend = () => { this.speaking=false; $('#btnRead').setAttribute('aria-pressed','false'); };
-    }
-  };
-
-  function openPreview(id){
-    const data = getTpl(id);
-    if(!data) return;
-
-    $('#articleTitle').textContent = data.title || '';
-    $('.article-meta').textContent = data.meta || '';
-    const hero = $('.article-hero');
-    hero.alt = data.imgAlt || '';
-    hero.src = data.imgSrc || '';
-    $('.article-body').innerHTML = (data.body || []).join('');
-
-    // Reset scaling
-    scale = 1;
-    $('.article-body').style.fontSize = '1rem';
-
-    const modal = $('#articleModal');
-    modal.hidden = false;
-    // Focus the close button for keyboard users
-    modal.querySelector('.ds-modal__close').focus();
-
-    // Read button binds current article text
-    $('#btnRead').onclick = () => TTS.toggle($('#articleContent').innerText);
-    $('#btnAplus').onclick = () => { scale = Math.min(1.4, scale + 0.05); $('.article-body').style.fontSize = (scale)+'rem'; };
-    $('#btnAminus').onclick = () => { scale = Math.max(0.9, scale - 0.05); $('.article-body').style.fontSize = (scale)+'rem'; };
-  }
-
-  function closePreview(){
-    const modal = $('#articleModal');
-    modal.hidden = true;
-    if(TTS.speaking){ window.speechSynthesis.cancel(); TTS.speaking=false; }
-    // Clear hash without jumping
-    if (location.hash) history.pushState('', document.title, location.pathname + location.search);
-  }
-
-  // Intercept hero click
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a.card-link');
-    if(!a) return;
-    const href = a.getAttribute('href') || '';
-    if(href  '#right-to-repair'){
-      e.preventDefault();
-      openPreview('right-to-repair');
-      history.pushState(null, '', '#right-to-repair');
-    }
-  });
-
-  // Open directly if the page loads with the hash
-  if (location.hash  '#right-to-repair'){
-    window.requestAnimationFrame(() => openPreview('right-to-repair'));
-  }
-
-  // Close events
-  document.getElementById('articleModal').addEventListener('click', (e) => {
-    if (e.target.matches('[data-close-modal]') || e.target.classList.contains('ds-modal__scrim')) {
-      closePreview();
-    }
-  });
-  window.addEventListener('keydown', (e) => { if(e.key  'Escape' && !document.getElementById('articleModal').hidden) closePreview(); });
-  window.addEventListener('hashchange', () => {
-    if(location.hash !== '#right-to-repair' && !document.getElementById('articleModal').hidden) closePreview();
-  });
-})();
-/* Generic in-page preview for ANY card-link with a hash href */
-/* ===== In-page article preview (works site-wide) ===== */
-(function(){
-  function $(s){ return document.querySelector(s); }
-  function getTpl(id){
-    const t = document.getElementById('tpl-' + id);
-    if(!t) return null;
-    try { return JSON.parse(t.innerHTML.trim()); } catch(e){ console.warn('Bad JSON in', t.id); return null; }
-  }
-
-  // Minimal TTS
-  const TTS = {
-    on:false, u:null,
-    read(text){
-      if(!('speechSynthesis' in window)) { alert('TTS not supported.'); return; }
-      if(this.on){ speechSynthesis.cancel(); this.on=false; return; }
-      this.u = new SpeechSynthesisUtterance(text); this.u.rate = 1.0;
-      speechSynthesis.speak(this.u); this.on=true; this.u.onend=()=>this.on=false;
-    },
-    stop(){ if(this.on) { speechSynthesis.cancel(); this.on=false; } }
-  };
-
-  let scale = 1, prevFocus = null;
-
-  function openPreview(id){
-    const d = getTpl(id); if(!d) return;
-    $('#articleTitle').textContent = d.title || '';
-    $('#articleContent .article-meta').textContent = d.meta || '';
-    const img = $('#articleContent .article-hero');
-    img.alt = d.imgAlt || ''; img.src = d.imgSrc || '';
-    $('#articleContent .article-body').innerHTML = (d.body||[]).join('');
-
-    // reset text scale
-    scale = 1; $('#articleContent .article-body').style.fontSize = '1rem';
-
-    const modal = $('#articleModal');
-    modal.hidden = false;
-    document.body.classList.add('modal-open');                 // lock background
-    const panel = modal.querySelector('.ds-modal__panel');
-    panel.focus({ preventScroll:true });                       // focus into panel
-    prevFocus = document.activeElement;
-
-    // wire quick controls if present on page
-    const btnRead = document.getElementById('btnRead');
-    const btnPlus = document.getElementById('btnAplus');
-    const btnMinus = document.getElementById('btnAminus');
-    if (btnRead) btnRead.onclick = () => TTS.read($('#articleContent').innerText);
-    if (btnPlus) btnPlus.onclick = () => { scale=Math.min(1.4, scale+0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; };
-    if (btnMinus) btnMinus.onclick = () => { scale=Math.max(0.9, scale-0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; };
-  }
-
-  function closePreview(){
-    $('#articleModal').hidden = true;
-    document.body.classList.remove('modal-open');
-    TTS.stop();
-    if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
-    if (location.hash) history.pushState('', document.title, location.pathname + location.search);
-  }
-
-  // open by clicking any .card-link with a hash
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a.card-link'); if(!a) return;
-    const h = a.getAttribute('href') || '';
-    if (!h.startsWith('#')) return; // external links unaffected
-    e.preventDefault();
-    const id = h.slice(1);
-    openPreview(id);
-    history.pushState(null, '', h);
-  });
-
-  // close handlers
-  $('#articleModal')?.addEventListener('click', (e) => {
-    if (e.target.matches('[data-close-modal]') || e.target.classList.contains('ds-modal__scrim')) closePreview();
-  });
-  window.addEventListener('keydown', (e) => { if(e.key==='Escape' && !$('#articleModal').hidden) closePreview(); });
-
-  // deep-link open
-  if (location.hash) window.requestAnimationFrame(() => openPreview(location.hash.slice(1)));
-  window.addEventListener('hashchange', () => {
-    const id = location.hash.slice(1);
-    if (!id) return closePreview();
-    openPreview(id);
-  });
-})();
-    
-</script>
+  </section>
 
   <!-- MUST READ -->
-  <section class="wrap section">
+  <section class="wrap section must-read">
     <h2 class="section-heading">Must-Read</h2>
 
     <div class="cards-grid">
-      <!-- Card 1 (large) -->
+      <!-- Left: big card -->
       <article class="story-card story-card--lg">
-       <a class="card-link" href="#cost-of-betting" aria-label="The cost of betting against the stock market"></a>
-        <img loading="lazy" alt="a close-up of a stock trader's screen"
-             src="https://images.unsplash.com/photo-1651340981821-b519ad14da7c">
+        <a class="card-link" href="#cost-of-betting" aria-label="The cost of betting against the stock market"></a>
+        <img loading="lazy" alt="Red stock chart on a trading screen"
+             src="https://images.unsplash.com/photo-1549421263-3c8b5f69f4c1?auto=format&fit=crop&w=1600&q=80">
         <div class="card-overlay">
-          <!-- <span class="badge">ARTICLES</span> -->
+          <span class="badge">ARTICLES</span>
           <h3 class="card-title">The cost of betting against the stock market</h3>
-          <p class="card-excerpt">Investigating why 84% of CFD user's lose money</p>
+          <p class="card-excerpt">Investigating why 84% of CFD users lose money.</p>
           <div class="byline">By R. Correia · 6 min read</div>
         </div>
       </article>
-      
-      <!-- Card 2 -->
-<article class="story-card story-card--med">
-  <a class="card-link" href="#quiet-luxury" aria-label="The allure of quiet luxury brands."></a>
-  <img
-    loading="lazy" alt="Drivers' side view of Bentley" src="https://images.unsplash.com/photo-1655820871340-2de5a2e76c84">
-  <div class="card-overlay">
-    <!-- <span class="badge">FASHION</span> -->
-    <h3 class="card-title">The allure of quiet luxury brands.</h3>
-    <p class="card-excerpt">From Kiton to summers in Hamptons</p>
-    <div class="byline">By R. Correia · 6 min read</div>
-  </div>
-</article>
 
-      <!-- Card 3 -->
-      <article class="story-card">
-        <a class="card-link" href="#travel" aria-label="Personalised travel is the new status symbol"></a>
-        <img loading="lazy" alt="People with phones while travelling"
-             src="https://images.unsplash.com/photo-1530435460869-d13625c69bbf?auto=format&fit=crop&w=1200&q=80">
+      <!-- Right: single card filling the space -->
+      <article class="story-card story-card--side">
+        <a class="card-link" href="#retail-style" aria-label="Quiet luxury & heritage retail"></a>
+        <img loading="lazy" alt="Refined boutique aesthetic"
+             src="https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1200&q=80">
         <div class="card-overlay">
-         <!-- <span class="badge">TECHNOLOGY</span> -->
-          <h3 class="card-title">Personalised travel is the new status symbol</h3>
-          <p class="card-excerpt">Algorithms are curating taste—and class.</p>
-          <div class="byline">By R. Correia · 5 min read</div>
+          <span class="badge">RETAIL · STYLE & SOC</span>
+          <h3 class="card-title">Quiet luxury & heritage retail</h3>
+          <p class="card-excerpt">How restrained aesthetics keep legacy houses resilient.</p>
+          <div class="byline">By R. Correia · 6 min read</div>
         </div>
       </article>
-
     </div>
   </section>
 </main>
@@ -375,11 +85,32 @@
   </div>
 </footer>
 
+<!-- One modal used site-wide -->
+<div id="articleModal" class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="articleTitle" hidden>
+  <div class="ds-modal__scrim" data-close-modal></div>
+  <div class="ds-modal__panel" role="document" tabindex="-1">
+    <div class="ds-modal__bar">
+      <button class="ui-btn" id="btnRead" aria-pressed="false" title="Read this article aloud">🔈 Read</button>
+      <div class="spacer"></div>
+      <button class="ui-btn" id="btnAplus" title="Increase text size">A+</button>
+      <button class="ui-btn" id="btnAminus" title="Decrease text size">A−</button>
+      <button class="ui-btn ds-modal__close" data-close-modal aria-label="Close preview">✕</button>
+    </div>
+    <article class="ds-article" id="articleContent">
+      <h1 id="articleTitle" class="article-title"></h1>
+      <p class="article-meta muted"></p>
+      <img class="article-hero" alt="">
+      <div class="article-body"></div>
+    </article>
+  </div>
+</div>
+
 <script src="./config.js"></script>
 <script src="./scripts.js"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   window.A11Y.initTTSTarget('#main-content');
+  // Nothing else needed: preview + controls are wired globally in scripts.js
 </script>
 </body>
 </html>
