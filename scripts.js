@@ -106,62 +106,89 @@
   }
 
   /* FORM MODULE */
-  const Forms = {
-    initContactForm(cfg){
-      const form = document.getElementById(cfg.formId);
-      const comments = document.querySelector(cfg.commentSelector);
-      const counter = document.querySelector(cfg.counterSelector);
-      const dropzone = document.getElementById(cfg.dropzoneId);
-      const fileInput = document.getElementById(cfg.fileInputId);
-      const fileNameEl = document.getElementById(cfg.fileNameId);
-      const statusEl = document.getElementById(cfg.statusId);
-      const timerEl = document.getElementById(cfg.timerId);
-      const thankYou = document.getElementById(cfg.thankYouId);
+ /* ===== Contact form: Formspree + drag&drop PDF ===== */
+(function(){
+  function $(s){ return document.querySelector(s); }
+  function countWords(str){ return (str.trim().match(/\S+/g) || []).length; }
 
-      // Word limit
-      const MAX_WORDS = 500;
+  function initDropzone(dropzone, fileInput, fileNameEl){
+    const openPicker = () => fileInput.click();
+    const showFile   = () => {
+      const f = fileInput.files && fileInput.files[0];
+      fileNameEl.textContent = f ? `Attached: ${f.name}` : '';
+    };
+
+    // Click or keyboard activates the file picker
+    dropzone.addEventListener('click', openPicker);
+    dropzone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(); }
+    });
+
+    // Drag & drop
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault(); dropzone.classList.remove('dragover');
+      const f = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (!f) return;
+      if (f.type !== 'application/pdf') { alert('Please select a PDF.'); return; }
+      fileInput.files = e.dataTransfer.files;
+      showFile();
+    });
+
+    fileInput.addEventListener('change', showFile);
+  }
+
+  window.Forms = {
+    initContactForm(opts){
+      const form       = document.getElementById(opts.formId);
+      const comments   = document.querySelector(opts.commentSelector);
+      const counter    = document.querySelector(opts.counterSelector);
+      const dropzone   = document.getElementById(opts.dropzoneId);
+      const fileInput  = document.getElementById(opts.fileInputId);
+      const fileNameEl = document.getElementById(opts.fileNameId);
+      const statusEl   = document.getElementById(opts.statusId);
+      const timerEl    = document.getElementById(opts.timerId);
+      const thankYou   = document.getElementById(opts.thankYouId);
+
+      // word limit
+      const MAX = 500;
       comments.addEventListener('input', () => {
-        const words = countWords(comments.value);
-        if (words > MAX_WORDS){
-          // Trim to closest 500 words
-          comments.value = comments.value.trim().split(/\s+/).slice(0, MAX_WORDS).join(' ');
-        }
-        const current = Math.min(words, MAX_WORDS);
-        counter.textContent = `${current} / ${MAX_WORDS} words`;
+        const n = Math.min(countWords(comments.value), MAX);
+        if (n >= MAX) comments.value = comments.value.trim().split(/\s+/).slice(0, MAX).join(' ');
+        counter.textContent = `${n} / ${MAX} words`;
       });
 
-      // Drag & Drop
+      // dropzone
       initDropzone(dropzone, fileInput, fileNameEl);
 
-      // Gentle countdown: 5 minutes
-      let seconds = 5 * 60;
-      const tick = () => {
-        const m = String(Math.floor(seconds / 60)).padStart(2,'0');
-        const s = String(seconds % 60).padStart(2,'0');
-        timerEl.textContent = `Session timer: ${m}:${s}`;
-        if (seconds > 0) seconds -= 1;
-      };
-      tick();
-      setInterval(tick, 1000);
+      // gentle timer (5m)
+      let s = 5*60; const tick = () => {
+        const m = String(Math.floor(s/60)).padStart(2,'0'), ss = String(s%60).padStart(2,'0');
+        timerEl.textContent = `Session timer: ${m}:${ss}`; if (s>0) s--;
+      }; tick(); setInterval(tick, 1000);
 
-      // Submit handler
+      // submit
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         statusEl.textContent = 'Sending…';
 
-        if (!window.FORM_ENDPOINT || !/^https?:\/\//.test(window.FORM_ENDPOINT)){
-          statusEl.textContent = 'Form endpoint not configured. Please set FORM_ENDPOINT in config.js.';
+        if (!window.FORM_ENDPOINT) {
+          statusEl.textContent = 'Form endpoint not configured (config.js).';
           return;
         }
 
         try{
           const data = new FormData(form);
-          // Add a subject or source tag for your inbox filter
           data.append('_subject', 'Diluted Stories · Contact form');
 
+          // IMPORTANT for Formspree: Accept JSON so they avoid HTML redirect
           const res = await fetch(window.FORM_ENDPOINT, {
             method: 'POST',
-            body: data
+            body: data,
+            headers: { 'Accept': 'application/json' },
+            mode: 'cors',            // allow cross-origin
+            redirect: 'follow'       // follow if needed
           });
 
           if (res.ok){
@@ -169,7 +196,8 @@
             thankYou.hidden = false;
             statusEl.textContent = '';
           } else {
-            statusEl.textContent = 'Something went wrong. Please try again later.';
+            const j = await res.json().catch(()=>null);
+            statusEl.textContent = (j && j.errors && j.errors[0]?.message) || 'Submission failed. Please try again.';
           }
         }catch(err){
           console.error(err);
@@ -178,5 +206,4 @@
       });
     }
   };
-  window.Forms = Forms; // export
 })();
