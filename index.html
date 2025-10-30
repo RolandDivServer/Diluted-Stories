@@ -34,22 +34,21 @@
   <section class="wrap hero-spot">
     <article class="hero-card story-card--lg">
       <a class="card-link" href="#right-to-repair" aria-label="Read: What is the Right to Repair movement?"></a>
-      <img loading="lazy" alt="Phone repair on a lit workbench"
-           src="https://images.unsplash.com/photo-1576613109753-27804de2cba8">
+      <img id="heroImg" loading="lazy" alt="Phone repair on a lit workbench" src="">
       <div class="hero-overlay">
         <span class="badge">FEATURE</span>
-        <h1 class="hero-title">What is the Right to Repair movement?</h1>
-        <p class="hero-sub">How targeted legislation can curb e-waste and extend device lifespans.</p>
-        <div class="byline">By R. Correia · 8 min read</div>
+        <h1 id="heroTitle" class="hero-title"></h1>
+        <p id="heroSub" class="hero-sub"></p>
+        <div id="heroMeta" class="byline"></div>
       </div>
     </article>
   </section>
 
   <!-- MUST READ -->
   <section class="wrap section must-read">
-  <h2 class="section-heading">Must-Read</h2>
-  <div class="cards-grid" id="mustReadGrid"></div>
-</section>
+    <h2 class="section-heading">Must-Read</h2>
+    <div class="cards-grid" id="mustReadGrid"></div>
+  </section>
 </main>
 
 <footer class="ds-footer" role="contentinfo">
@@ -58,7 +57,7 @@
   </div>
 </footer>
 
-<!-- One modal used site-wide -->
+<!-- Shared modal -->
 <div id="articleModal" class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="articleTitle" hidden>
   <div class="ds-modal__scrim" data-close-modal></div>
   <div class="ds-modal__panel" role="document" tabindex="-1">
@@ -82,8 +81,21 @@
 <script src="./scripts.js"></script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-  window.A11Y.initTTSTarget('#main-content');
-  // Nothing else needed: preview + controls are wired globally in scripts.js
+  A11Y.initTTSTarget('#main-content');
+
+  ArticleStore.load().then(() => {
+    // Bind hero from a featured article
+    const a = ArticleStore.get('right-to-repair');
+    if (a){
+      document.getElementById('heroTitle').textContent = a.title;
+      document.getElementById('heroSub').textContent = a.excerpt || '';
+      document.getElementById('heroMeta').textContent = a.meta;
+      const img = document.getElementById('heroImg');
+      img.src = normalizeUnsplash(a.imgSrc);
+    }
+    // Render must-read list (all, for now)
+    ArticleStore.renderGrid('#mustReadGrid');
+  });
 </script>
 </body>
 </html>
