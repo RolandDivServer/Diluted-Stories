@@ -95,7 +95,14 @@
         return window.ARTICLES;
       }
     }
-
+     
+<script>
+  ArticleStore.load().then(() => {
+    // Example: render all (or pick a subset/ordering)
+    ArticleStore.renderGrid('#mustReadGrid');
+  });
+</script>
+     
     function renderGrid(container){
       const el = typeof container === 'string' ? document.querySelector(container) : container;
       if (!el) return;
