@@ -3,7 +3,7 @@
     "title": "What is the Right to Repair movement?",
     "meta": "By R. Correia · 8 min read",
     "imgAlt": "Phone repair on a lit workbench",
-    "imgSrc": "https://source.unsplash.com/PZLgTUAhxMM/1600x900",
+    "imgSrc": "https://images.unsplash.com/photo-PZLgTUAhxMM",
     "excerpt": "How targeted legislation can curb e-waste and extend device lifespans.",
     "body": [
       "<p>The Right to Repair movement argues that consumers and independent repairers should have practical access to parts, tools, manuals and diagnostics needed to fix modern devices.</p>",
@@ -17,7 +17,7 @@
     "title": "The cost of betting against the stock market",
     "meta": "By R. Correia · 6 min read",
     "imgAlt": "Red stock chart on a trading screen",
-    "imgSrc": "https://images.unsplash.com/photo-1549421263-3c8b5f69f4c1?auto=format&fit=crop&w=1600&q=80",
+    "imgSrc": "https://images.unsplash.com/photo-1549421263-3c8b5f69f4c1",
     "excerpt": "Investigating why 84% of CFD users lose money.",
     "body": [
       "<p>Shorting looks attractive during drawdowns, but indices have an upward drift and compounding works against shorts.</p>",
@@ -30,13 +30,19 @@
     "title": "Quiet luxury & heritage retail",
     "meta": "By R. Correia · 6 min read",
     "imgAlt": "Refined boutique aesthetic",
-    "imgSrc": "https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1600&q=80",
+    "imgSrc": "https://images.unsplash.com/photo-1520975922323-364e138278bd",
     "excerpt": "How restrained aesthetics keep legacy houses resilient.",
     "body": [
-      "<p>Quiet luxury values craft over noise: natural fibres, hand-finished details, muted palettes. Heritage retail survives slowdowns by leaning into those values while updating formats and service.</p>",
-      "<h3>Playbook</h3>",
-      "<ul><li><strong>Edit over excess:</strong> tighter assortments and seasonal capsules.</li><li><strong>Service as moat:</strong> alterations, repair and clienteling.</li><li><strong>Right-sized stores:</strong> smaller footprints with better product storytelling.</li><li><strong>Digital craft:</strong> calm UX, fast pages, clear imagery.</li></ul>",
-      "<p>The mix of restraint and service builds trust — and keeps legacy houses resilient when footfall tightens.</p>"
+      "<p>The concept of Quiet Luxury is one of effortless elegance, where luxury needs no ostentation. It is measured in the details, in the fine fabrics and in the essential curves that enhance the natural movement of the body. A carefree, effortless charm that captures the essence of stolen moments, bursts of laughter, and the beauty found in simplicity. It is a luxury that manifests itself in moments of quietness and authenticity. It’s not just the dazzling allure of grand events, but the quiet intimacy of a moment savoured for oneself. Fabrics like linen, silk, and cashmere come together in sleek, minimalist designs, with each seam reflecting a keen focus on quality. There is no need for flashy logos or excessive decoration: elegance lies in the sense of well-being that a well-made dress can give.</p>",
     ]
-  }
+  },
+  "sustinability-in-fashion":{
+    "title": "What do people mean by Eco-friendly fashion",
+    "meta": "By R. Correia · 6 min read",
+    "imgAlt": "a charity shop floor",
+    "imgSrc": "https://images.unsplash.com/photo-1573612664822-d7d347da7b80",
+    "excerpt": "The up's and downs",
+    "body": [
+      "<p>this is a test<p>"
+    ]
 }
