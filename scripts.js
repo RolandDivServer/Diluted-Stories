@@ -138,23 +138,15 @@
 
     let scale = 1, prevFocus = null;
 
-    function open(id){
-      const d = window.ARTICLES[id]; if(!d) return;
-      $('#articleTitle').textContent = d.title;
-      $('#articleContent .article-meta').textContent = d.meta;
-      const img = $('#articleContent .article-hero'); img.alt = d.imgAlt; img.src = d.imgSrc;
-      $('#articleContent .article-body').innerHTML = (d.body||[]).join('');
-      scale = 1; $('#articleContent .article-body').style.fontSize = '1rem';
-
-      const modal = $('#articleModal'); modal.hidden = false;
-      document.body.classList.add('modal-open'); // lock background scroll
-      const panel = modal.querySelector('.ds-modal__panel'); panel.focus({ preventScroll:true });
-      prevFocus = document.activeElement;
-
-      document.getElementById('btnRead')?.addEventListener('click', () => TTS.toggle($('#articleContent').innerText));
-      document.getElementById('btnAplus')?.addEventListener('click', () => { scale=Math.min(1.4, scale+0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; });
-      document.getElementById('btnAminus')?.addEventListener('click', () => { scale=Math.max(0.9, scale-0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; });
-    }
+    function openPreview(d){
+  $('#articleTitle').textContent = d.title;
+  $('#articleContent .article-meta').textContent = d.meta;
+  const img = $('#articleContent .article-hero');
+  img.alt = d.imgAlt; 
+  img.src = window.normalizeUnsplash(d.imgSrc);
+  $('#articleContent .article-body').innerHTML = (d.body || []).join('');
+  // ...rest (scroll lock, TTS buttons, etc.)
+}
     function close(){
       const modal = document.getElementById('articleModal');
       modal.hidden = true; document.body.classList.remove('modal-open'); TTS.stop();
@@ -163,30 +155,36 @@
     }
 
     // Intercept any card-link with hash
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a.card-link'); if(!a) return;
-      const h = a.getAttribute('href') || ''; if (!h.startsWith('#')) return;
-      e.preventDefault(); const id = h.slice(1);
-      if (window.ARTICLES[id]) { open(id); history.pushState(null,'',h); }
-    });
+    // Intercept any card-link with a hash
+document.addEventListener('click', async (e) => {
+  const a = e.target.closest('a.card-link'); if (!a) return;
+  const h = a.getAttribute('href') || ''; if (!h.startsWith('#')) return;
+  e.preventDefault();
+  const id = h.slice(1);
+  await ArticleStore.load();               // <-- ensure data is loaded
+  const data = ArticleStore.get(id);
+  if (!data) return;
 
-    document.getElementById('articleModal')?.addEventListener('click', (e) => {
-      if (e.target.matches('[data-close-modal]') || e.target.classList.contains('ds-modal__scrim')) close();
-    });
-    window.addEventListener('keydown', (e) => { if(e.key==='Escape' && !document.getElementById('articleModal').hidden) close(); });
-
-    // Deep-link
-    if (location.hash) window.requestAnimationFrame(() => {
-      const id = location.hash.slice(1);
-      if (window.ARTICLES[id]) open(id);
-    });
-    window.addEventListener('hashchange', () => {
-      const id = location.hash.slice(1);
-      if (!id) return close();
-      if (window.ARTICLES[id]) open(id);
-    });
-  })();
-
+  // Open modal with data
+  openPreview(data);                       // change your open() to accept data object
+  history.pushState(null, '', h);
+});
+    // Deep-link on load / hashchange
+if (location.hash) {
+  const initial = location.hash.slice(1);
+  ArticleStore.load().then(() => {
+    const d = ArticleStore.get(initial);
+    if (d) openPreview(d);
+  });
+}
+window.addEventListener('hashchange', () => {
+  const id = location.hash.slice(1);
+  if (!id) return closePreview();
+  ArticleStore.load().then(() => {
+    const d = ArticleStore.get(id);
+    if (d) openPreview(d);
+  });
+});
   /* ================= CONTACT FORM (NO UPLOADS) ================= */
   (function(){
     function $(s){ return document.querySelector(s); }
