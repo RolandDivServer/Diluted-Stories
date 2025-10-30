@@ -62,24 +62,14 @@
   document.getElementById('year').textContent = new Date().getFullYear();
   window.A11Y.initTTSTarget('#main-content');
 
-  // Auto-render cards from the central ARTICLES dataset
-  (function(){
-    const grid = document.getElementById('articlesGrid');
-    Object.entries(window.ARTICLES).forEach(([id, a]) => {
-      const card = document.createElement('article');
-      card.className = 'story-card';
-      card.innerHTML = `
-        <a class="card-link" href="#${id}" aria-label="${a.title}"></a>
-        <img loading="lazy" alt="${a.imgAlt}" src="${a.imgSrc}">
-        <div class="card-overlay">
-          <span class="badge">ARTICLES</span>
-          <h3 class="card-title">${a.title}</h3>
-          <p class="card-excerpt">${a.excerpt || ''}</p>
-          <div class="byline">${a.meta}</div>
-        </div>`;
-      grid.appendChild(card);
-    });
-  })();
+ <script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  window.A11Y.initTTSTarget('#main-content');
+
+  ArticleStore.load().then(() => {
+    ArticleStore.renderGrid('#articlesGrid');
+  });
+</script>
 </script>
 </body>
 </html>
