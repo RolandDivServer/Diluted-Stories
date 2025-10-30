@@ -1,21 +1,19 @@
 /* scripts.js
-   Site-wide behaviour:
    - Theme toggle, text size, TTS
-   - Central ARTICLES dataset (used by preview + articles.html)
-   - In-page preview modal (locks background, scrolls inside)
-   - Contact form submit (Formspree), 500-word limit, timer
+   - ArticleStore -> loads articles.json (single source of truth)
+   - Unsplash URL normalizer
+   - In-page preview modal
+   - Contact form (Formspree, no uploads)
 */
-
 (function(){
   const root = document.documentElement;
 
-  /* ================= THEME & TEXT SIZE ================= */
+  /* THEME & TEXT SIZE & TTS */
   const themeToggle = () => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     localStorage.setItem('ds-theme', next);
-    const btn = document.getElementById('themeToggle');
-    if (btn) btn.setAttribute('aria-pressed', String(next === 'dark'));
+    document.getElementById('themeToggle')?.setAttribute('aria-pressed', String(next === 'dark'));
   };
   const savedTheme = localStorage.getItem('ds-theme');
   if (savedTheme) root.setAttribute('data-theme', savedTheme);
@@ -27,28 +25,14 @@
   }
 
   const A11Y = {
-    ttsEnabled: false,
-    ttsUtterance: null,
-    targetEl: null,
-    initTTSTarget(selector){
-      this.targetEl = document.querySelector(selector) || document.body;
-      window.A11Y = A11Y;
-    },
-    toggleTTS(){
-      if (!('speechSynthesis' in window)) { alert('Text-to-speech not supported.'); return; }
-      this.ttsEnabled = !this.ttsEnabled;
-      const btn = document.getElementById('ttsToggle');
-      if (btn) btn.setAttribute('aria-pressed', String(this.ttsEnabled));
-      if (this.ttsEnabled) this.start(); else this.stop();
-    },
-    start(){
-      this.stop();
-      const text = this.targetEl ? this.targetEl.innerText : document.body.innerText;
-      this.ttsUtterance = new SpeechSynthesisUtterance(text);
-      this.ttsUtterance.rate = 1.0;
-      window.speechSynthesis.speak(this.ttsUtterance);
-    },
-    stop(){ if (window.speechSynthesis.speaking) window.speechSynthesis.cancel(); this.ttsUtterance = null; }
+    ttsEnabled:false, targetEl:null, utter:null,
+    initTTSTarget(sel){ this.targetEl = document.querySelector(sel) || document.body; window.A11Y = A11Y; },
+    toggle(){
+      if(!('speechSynthesis' in window)) return alert('Text-to-speech not supported.');
+      if (this.utter && speechSynthesis.speaking){ speechSynthesis.cancel(); this.utter=null; return; }
+      this.utter = new SpeechSynthesisUtterance((this.targetEl||document.body).innerText);
+      this.utter.rate = 1.0; speechSynthesis.speak(this.utter);
+    }
   };
   window.A11Y = A11Y;
 
@@ -56,53 +40,35 @@
     document.getElementById('themeToggle')?.addEventListener('click', themeToggle);
     document.getElementById('textBigger')?.addEventListener('click', () => changeFontScale(+0.05));
     document.getElementById('textSmaller')?.addEventListener('click', () => changeFontScale(-0.05));
-    document.getElementById('ttsToggle')?.addEventListener('click', () => A11Y.toggleTTS());
+    document.getElementById('ttsToggle')?.addEventListener('click', () => A11Y.toggle());
   });
 
-/* ===== ONE SOURCE OF TRUTH: ArticleStore ===== */
-(function(){
-  // Normalize Unsplash page URLs to reliable image URLs
+  /* UTIL: Unsplash normalizer */
   window.normalizeUnsplash = function(u){
     if (!u) return u;
     const m = u.match(/unsplash\.com\/photos\/(?:[\w-]*-)?([A-Za-z0-9_-]+)/i);
     return m && m[1] ? `https://source.unsplash.com/${m[1]}/1600x900` : u;
   };
 
+  /* ArticleStore (single source of truth) */
   window.ArticleStore = (function(){
     const KEY = 'ds-articles-v1';
-
     async function load(){
       if (window.ARTICLES && Object.keys(window.ARTICLES).length) return window.ARTICLES;
       try{
-        const res = await fetch('articles.json', { cache: 'no-store' });
+        const res = await fetch('articles.json', { cache:'no-store' });
         const json = await res.json();
         const data = {};
-        Object.entries(json).forEach(([id, a]) => {
-          a.imgSrc = window.normalizeUnsplash(a.imgSrc);
-          data[id] = a;
-        });
+        Object.entries(json).forEach(([id, a]) => { a.imgSrc = normalizeUnsplash(a.imgSrc); data[id] = a; });
         window.ARTICLES = data;
         localStorage.setItem(KEY, JSON.stringify(data));
         return data;
-      }catch(err){
-        // Fallback: last good copy
+      }catch(e){
         const cached = localStorage.getItem(KEY);
-        if (cached){
-          window.ARTICLES = JSON.parse(cached);
-          return window.ARTICLES;
-        }
-        window.ARTICLES = {}; // final fallback
-        return window.ARTICLES;
+        if (cached){ window.ARTICLES = JSON.parse(cached); return window.ARTICLES; }
+        window.ARTICLES = {}; return window.ARTICLES;
       }
     }
-     
-<script>
-  ArticleStore.load().then(() => {
-    // Example: render all (or pick a subset/ordering)
-    ArticleStore.renderGrid('#mustReadGrid');
-  });
-</script>
-     
     function renderGrid(container){
       const el = typeof container === 'string' ? document.querySelector(container) : container;
       if (!el) return;
@@ -123,81 +89,67 @@
         `);
       });
     }
-
     function get(id){ return (window.ARTICLES || {})[id] || null; }
-
     return { load, renderGrid, get };
   })();
-})();
 
-  /* ================= PREVIEW MODAL ================= */
+  /* PREVIEW MODAL */
   (function(){
-    function $(s){ return document.querySelector(s); }
-    const TTS = { on:false, u:null,
-      toggle(text){
-        if(!('speechSynthesis' in window)){ alert('Text-to-speech not supported.'); return; }
-        if(this.on){ speechSynthesis.cancel(); this.on=false; return; }
-        this.u = new SpeechSynthesisUtterance(text); this.u.rate=1.0;
-        speechSynthesis.speak(this.u); this.on=true; this.u.onend=()=>this.on=false;
-      },
-      stop(){ if(this.on){ speechSynthesis.cancel(); this.on=false; } }
-    };
-
+    const $ = (s)=>document.querySelector(s);
     let scale = 1, prevFocus = null;
 
     function openPreview(d){
-  $('#articleTitle').textContent = d.title;
-  $('#articleContent .article-meta').textContent = d.meta;
-  const img = $('#articleContent .article-hero');
-  img.alt = d.imgAlt; 
-  img.src = window.normalizeUnsplash(d.imgSrc);
-  $('#articleContent .article-body').innerHTML = (d.body || []).join('');
-  // ...rest (scroll lock, TTS buttons, etc.)
-}
-    function close(){
+      $('#articleTitle').textContent = d.title;
+      $('#articleContent .article-meta').textContent = d.meta;
+      const img = $('#articleContent .article-hero');
+      img.alt = d.imgAlt; img.src = normalizeUnsplash(d.imgSrc);
+      $('#articleContent .article-body').innerHTML = (d.body || []).join('');
+      scale = 1; $('#articleContent .article-body').style.fontSize = '1rem';
+
+      const modal = $('#articleModal'); modal.hidden = false;
+      document.body.classList.add('modal-open');
+      const panel = modal.querySelector('.ds-modal__panel'); panel.focus({ preventScroll:true });
+      prevFocus = document.activeElement;
+
+      document.getElementById('btnRead')?.addEventListener('click', () => A11Y.toggle());
+      document.getElementById('btnAplus')?.addEventListener('click', () => { scale=Math.min(1.4, scale+0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; });
+      document.getElementById('btnAminus')?.addEventListener('click', () => { scale=Math.max(0.9, scale-0.05); $('#articleContent .article-body').style.fontSize=scale+'rem'; });
+    }
+    function closePreview(){
       const modal = document.getElementById('articleModal');
-      modal.hidden = true; document.body.classList.remove('modal-open'); TTS.stop();
+      modal.hidden = true; document.body.classList.remove('modal-open'); speechSynthesis?.cancel?.();
       if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
       if (location.hash) history.pushState('', document.title, location.pathname + location.search);
     }
 
-    // Intercept any card-link with hash
-    // Intercept any card-link with a hash
-document.addEventListener('click', async (e) => {
-  const a = e.target.closest('a.card-link'); if (!a) return;
-  const h = a.getAttribute('href') || ''; if (!h.startsWith('#')) return;
-  e.preventDefault();
-  const id = h.slice(1);
-  await ArticleStore.load();               // <-- ensure data is loaded
-  const data = ArticleStore.get(id);
-  if (!data) return;
+    document.addEventListener('click', async (e) => {
+      const a = e.target.closest('a.card-link'); if (!a) return;
+      const h = a.getAttribute('href') || ''; if (!h.startsWith('#')) return;
+      e.preventDefault();
+      const id = h.slice(1);
+      await ArticleStore.load();
+      const d = ArticleStore.get(id); if (d){ openPreview(d); history.pushState(null,'',h); }
+    });
 
-  // Open modal with data
-  openPreview(data);                       // change your open() to accept data object
-  history.pushState(null, '', h);
-});
-    // Deep-link on load / hashchange
-if (location.hash) {
-  const initial = location.hash.slice(1);
-  ArticleStore.load().then(() => {
-    const d = ArticleStore.get(initial);
-    if (d) openPreview(d);
-  });
-}
-window.addEventListener('hashchange', () => {
-  const id = location.hash.slice(1);
-  if (!id) return closePreview();
-  ArticleStore.load().then(() => {
-    const d = ArticleStore.get(id);
-    if (d) openPreview(d);
-  });
-});
-  /* ================= CONTACT FORM (NO UPLOADS) ================= */
-  (function(){
-    function $(s){ return document.querySelector(s); }
+    document.getElementById('articleModal')?.addEventListener('click', (e) => {
+      if (e.target.matches('[data-close-modal]') || e.target.classList.contains('ds-modal__scrim')) closePreview();
+    });
+    window.addEventListener('keydown', (e) => { if(e.key==='Escape' && !document.getElementById('articleModal').hidden) closePreview(); });
+
+    if (location.hash) ArticleStore.load().then(() => {
+      const d = ArticleStore.get(location.hash.slice(1)); if (d) openPreview(d);
+    });
+    window.addEventListener('hashchange', () => {
+      const id = location.hash.slice(1);
+      if (!id) return closePreview();
+      ArticleStore.load().then(()=>{ const d = ArticleStore.get(id); if (d) openPreview(d); });
+    });
+  })();
+
+  /* CONTACT FORM (Formspree, no uploads) */
+  window.Forms = (function(){
     function countWords(str){ return (str.trim().match(/\S+/g) || []).length; }
-
-    const Forms = {
+    return {
       initContactForm(opts){
         const form     = document.getElementById(opts.formId);
         const comments = document.querySelector(opts.commentSelector);
@@ -206,7 +158,6 @@ window.addEventListener('hashchange', () => {
         const timerEl  = document.getElementById(opts.timerId);
         const thankYou = document.getElementById(opts.thankYouId);
 
-        // Word limit
         const MAX = 500;
         comments.addEventListener('input', () => {
           const n = Math.min(countWords(comments.value), MAX);
@@ -214,7 +165,6 @@ window.addEventListener('hashchange', () => {
           counter.textContent = `${n} / ${MAX} words`;
         });
 
-        // Gentle timer 5m
         let s = 5*60; const tick = () => {
           const m = String(Math.floor(s/60)).padStart(2,'0'), ss = String(s%60).padStart(2,'0');
           timerEl.textContent = `Session timer: ${m}:${ss}`; if (s>0) s--;
@@ -223,36 +173,24 @@ window.addEventListener('hashchange', () => {
         form.addEventListener('submit', async (e) => {
           e.preventDefault(); statusEl.textContent = 'Sending…';
           if (!window.FORM_ENDPOINT) { statusEl.textContent = 'Form endpoint missing (config.js).'; return; }
-
           try{
-            // Build form data (no file uploads)
             const data = new FormData(form);
             data.append('_subject', 'Diluted Stories · Contact form');
-
             const res = await fetch(window.FORM_ENDPOINT, {
               method: 'POST',
               body: data,
-              headers: { 'Accept': 'application/json' },
+              headers: { 'Accept':'application/json' },
               mode: 'cors',
               redirect: 'follow'
             });
-
-            if (res.ok){
-              form.hidden = true;
-              thankYou.hidden = false;
-              statusEl.textContent = '';   // success message is in #thankYou
-            } else {
+            if (res.ok){ form.hidden = true; thankYou.hidden = false; statusEl.textContent=''; }
+            else{
               const j = await res.json().catch(()=>null);
               statusEl.textContent = (j && j.errors && j.errors[0]?.message) || 'Submission failed. Please try again.';
             }
-          }catch(err){
-            console.error(err);
-            statusEl.textContent = 'Network error. Please try again.';
-          }
+          }catch(err){ console.error(err); statusEl.textContent = 'Network error. Please try again.'; }
         });
       }
     };
-    window.Forms = Forms;
   })();
-
 })();
