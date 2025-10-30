@@ -59,50 +59,69 @@
     document.getElementById('ttsToggle')?.addEventListener('click', () => A11Y.toggleTTS());
   });
 
-  /* ================= CENTRAL ARTICLES DATA ================= */
-  // One source of truth used by index and articles pages.
-  window.ARTICLES = {
-    'right-to-repair': {
-      title: 'What is the Right to Repair movement?',
-      meta: 'By R. Correia · 8 min read',
-      imgAlt: 'Phone repair on a lit workbench',
-      imgSrc: 'https://source.unsplash.com/PZLgTUAhxMM/1600x900',
-      excerpt: 'How targeted legislation can curb e-waste and extend device lifespans.',
-      body: [
-        '<p>The Right to Repair movement argues that consumers and independent repairers should have practical access to parts, tools, manuals and diagnostics needed to fix modern devices.</p>',
-        '<p>Supporters say this extends product lifespans, cuts e-waste and lowers costs while keeping local repair economies alive.</p>',
-        '<h3>Why it matters</h3>',
-        '<ul><li>Less e-waste → lower environmental impact.</li><li>Cheaper fixes and longer device lifespans.</li><li>More competition and innovation in repair services.</li></ul>',
-        '<p>Policy frameworks differ by region, but the direction is clear: repair should be a right, not a privilege.</p>'
-      ]
-    },
-    'cost-of-betting': {
-      title: 'The cost of betting against the stock market',
-      meta: 'By R. Correia · 6 min read',
-      imgAlt: 'Red stock chart on a trading screen',
-      imgSrc: 'https://images.unsplash.com/photo-1549421263-3c8b5f69f4c1?auto=format&fit=crop&w=1600&q=80',
-      excerpt: 'Investigating why 84% of CFD users lose money.',
-      body: [
-        '<p>Shorting looks attractive during drawdowns, but indices have an upward drift and compounding works against shorts.</p>',
-        '<h3>Why most retail shorts lose</h3>',
-        '<ul><li>Baseline market drift is up; timing has to be perfect.</li><li>Volatility spikes and margin calls force exits early.</li><li>Spreads, fees and financing erode returns quietly.</li></ul>',
-        '<p>For most investors, risk sizing and diversification beat outright directional shorts.</p>'
-      ]
-    },
-    'retail-style': {
-      title: 'Quiet luxury & heritage retail',
-      meta: 'By R. Correia · 6 min read',
-      imgAlt: 'Refined boutique aesthetic',
-      imgSrc: 'https://images.unsplash.com/photo-1520975922323-364e138278bd?auto=format&fit=crop&w=1600&q=80',
-      excerpt: 'How restrained aesthetics keep legacy houses resilient.',
-      body: [
-        '<p>Quiet luxury values craft over noise: natural fibres, hand-finished details, muted palettes. Heritage retail survives slowdowns by leaning into those values while updating formats and service.</p>',
-        '<h3>Playbook</h3>',
-        '<ul><li><strong>Edit over excess:</strong> tighter assortments and seasonal capsules.</li><li><strong>Service as moat:</strong> alterations, repair and clienteling.</li><li><strong>Right-sized stores:</strong> smaller footprints with better product storytelling.</li><li><strong>Digital craft:</strong> calm UX, fast pages, clear imagery.</li></ul>',
-        '<p>The mix of restraint and service builds trust — and keeps legacy houses resilient when footfall tightens.</p>'
-      ]
-    }
+/* ===== ONE SOURCE OF TRUTH: ArticleStore ===== */
+(function(){
+  // Normalize Unsplash page URLs to reliable image URLs
+  window.normalizeUnsplash = function(u){
+    if (!u) return u;
+    const m = u.match(/unsplash\.com\/photos\/(?:[\w-]*-)?([A-Za-z0-9_-]+)/i);
+    return m && m[1] ? `https://source.unsplash.com/${m[1]}/1600x900` : u;
   };
+
+  window.ArticleStore = (function(){
+    const KEY = 'ds-articles-v1';
+
+    async function load(){
+      if (window.ARTICLES && Object.keys(window.ARTICLES).length) return window.ARTICLES;
+      try{
+        const res = await fetch('articles.json', { cache: 'no-store' });
+        const json = await res.json();
+        const data = {};
+        Object.entries(json).forEach(([id, a]) => {
+          a.imgSrc = window.normalizeUnsplash(a.imgSrc);
+          data[id] = a;
+        });
+        window.ARTICLES = data;
+        localStorage.setItem(KEY, JSON.stringify(data));
+        return data;
+      }catch(err){
+        // Fallback: last good copy
+        const cached = localStorage.getItem(KEY);
+        if (cached){
+          window.ARTICLES = JSON.parse(cached);
+          return window.ARTICLES;
+        }
+        window.ARTICLES = {}; // final fallback
+        return window.ARTICLES;
+      }
+    }
+
+    function renderGrid(container){
+      const el = typeof container === 'string' ? document.querySelector(container) : container;
+      if (!el) return;
+      const data = window.ARTICLES || {};
+      el.innerHTML = '';
+      Object.entries(data).forEach(([id, a]) => {
+        el.insertAdjacentHTML('beforeend', `
+          <article class="story-card">
+            <a class="card-link" href="#${id}" aria-label="${a.title}"></a>
+            <img loading="lazy" alt="${a.imgAlt}" src="${a.imgSrc}">
+            <div class="card-overlay">
+              <span class="badge">ARTICLES</span>
+              <h3 class="card-title">${a.title}</h3>
+              <p class="card-excerpt">${a.excerpt || ''}</p>
+              <div class="byline">${a.meta}</div>
+            </div>
+          </article>
+        `);
+      });
+    }
+
+    function get(id){ return (window.ARTICLES || {})[id] || null; }
+
+    return { load, renderGrid, get };
+  })();
+})();
 
   /* ================= PREVIEW MODAL ================= */
   (function(){
