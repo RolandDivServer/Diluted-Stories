@@ -1,27 +1,19 @@
-// main.js
-const yearSpan = document.getElementById('year');
-if (yearSpan) {
-  yearSpan.textContent = new Date().getFullYear().toString();
-}
+// year
+document.getElementById("year").textContent = new Date().getFullYear();
 
-// Simple scroll-reveal for elements with .reveal
-const reveals = document.querySelectorAll('.reveal');
+// scroll reveal animation
+const elems = document.querySelectorAll(".reveal");
 
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
+const observer = new IntersectionObserver(
+  entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("visible");
+        observer.unobserve(e.target);
+      }
+    });
+  },
+  { threshold: 0.2 }
+);
 
-  reveals.forEach(el => observer.observe(el));
-} else {
-  // Fallback for very old browsers
-  reveals.forEach(el => el.classList.add('is-visible'));
-}
+elems.forEach(el => observer.observe(el));
