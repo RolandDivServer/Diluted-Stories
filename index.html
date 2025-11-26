@@ -2,256 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Roland Correia · Front-End Web Developer</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Roland Correia · Front-End Web Developer specialising in TypeScript, React, modern JavaScript, HTML5, CSS3 and REST APIs." />
-  <link rel="stylesheet" href="./main.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>Roland Correia — Front-End Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-<header class="site-header">
-  <div class="container header-inner">
-    <div class="brand">
-      <span class="brand-mark">RC</span>
-      <div class="brand-text">
-        <span class="brand-name">Roland Correia</span>
-        <span class="brand-role">Front-End Web Development</span>
-      </div>
-    </div>
-    <nav class="main-nav" aria-label="Primary">
-      <a href="#skills">Skills</a>
+<header class="nav">
+  <div class="container nav-inner">
+    <div class="logo">RC</div>
+    <nav>
       <a href="#projects">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="/dilutedstories/" class="nav-pill">Diluted Stories</a>
+      <a href="/dilutedstories/">Diluted Stories</a>
     </nav>
   </div>
 </header>
 
-<main>
-  <!-- HERO -->
-  <section class="hero" id="top">
-    <div class="container hero-grid">
-      <div class="hero-copy reveal">
-        <p class="eyebrow">Front-End Developer · Web Experiences</p>
-        <h1>Building clean, reliable interfaces that feel effortless to use.</h1>
-        <p class="hero-lead">
-          I specialise in <strong>TypeScript</strong>, <strong>React</strong>, modern <strong>JavaScript (ES6+)</strong>, 
-          <strong>HTML5</strong>, <strong>CSS3</strong> and integrating with <strong>REST APIs</strong> to ship real products,
-          not just pretty mockups.
-        </p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn primary">View projects</a>
-          <a href="/dilutedstories/" class="btn ghost">Read Diluted Stories</a>
-        </div>
-        <div class="hero-meta">
-          <span>Open to front-end roles · Remote & UK-based</span>
-        </div>
+<section class="hero">
+  <div class="container hero-inner reveal">
+    <h1>Front-End Developer crafting clean, fast, modern interfaces.</h1>
+    <p class="tagline">TypeScript · React · JavaScript (ES6+) · HTML5 · CSS3 · REST APIs</p>
+    <a href="#projects" class="btn primary">View Work</a>
+  </div>
+</section>
+
+<section class="stack">
+  <div class="container stack-inner">
+    <span class="chip">TypeScript</span>
+    <span class="chip">React</span>
+    <span class="chip">JavaScript (ES6+)</span>
+    <span class="chip">HTML5</span>
+    <span class="chip">CSS3</span>
+    <span class="chip">REST APIs</span>
+  </div>
+</section>
+
+<section id="projects" class="projects">
+  <div class="container">
+    <h2 class="section-title">Selected Projects</h2>
+
+    <div class="project-grid">
+
+      <div class="project-card reveal">
+        <h3>Productivity Dashboard</h3>
+        <p>Component-driven UI with API-powered widgets.</p>
+        <div class="meta">React · TypeScript · REST</div>
+        <a href="https://github.com/RolandDivServer" target="_blank">View on GitHub →</a>
       </div>
-      <div class="hero-panel reveal">
-        <div class="hero-card">
-          <p class="hero-card-title">Tech Snapshot</p>
-          <ul class="stack-list">
-            <li><span class="chip ts">TypeScript</span></li>
-            <li><span class="chip react">React</span></li>
-            <li><span class="chip js">JavaScript (ES6+)</span></li>
-            <li><span class="chip html">HTML5</span></li>
-            <li><span class="chip css">CSS3</span></li>
-            <li><span class="chip api">REST APIs</span></li>
-          </ul>
-          <p class="hero-card-note">
-            Focused on component-driven UIs, accessible markup and performance-aware styling.
-          </p>
-        </div>
+
+      <div class="project-card reveal">
+        <h3>Diluted Stories</h3>
+        <p>Editorial-style mini publication with article previews.</p>
+        <div class="meta">HTML · CSS · JavaScript</div>
+        <a href="/dilutedstories/">Open Project →</a>
       </div>
+
+      <div class="project-card reveal">
+        <h3>Market Insight Tool</h3>
+        <p>Small interface concept consuming real market APIs.</p>
+        <div class="meta">JavaScript · APIs · UI Design</div>
+        <a href="https://github.com/RolandDivServer" target="_blank">View Code →</a>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SKILLS -->
-  <section id="skills" class="section">
-    <div class="container">
-      <header class="section-header">
-        <h2>Core skills</h2>
-        <p>Technologies I use to build, structure and connect modern web apps.</p>
-      </header>
-
-      <div class="grid skills-grid">
-        <article class="skill-card reveal">
-          <h3>TypeScript</h3>
-          <p>Type-safe front-end code with clearer contracts and fewer runtime surprises. Comfortable with interfaces, generics and typing React props.</p>
-          <ul>
-            <li>Strong typing over complex UI state</li>
-            <li>Reusable utility types</li>
-            <li>Better DX on larger codebases</li>
-          </ul>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>React</h3>
-          <p>Component-driven UIs with hooks, context and clean state management patterns.</p>
-          <ul>
-            <li>Reusable UI components</li>
-            <li>Hooks & composition patterns</li>
-            <li>Client-side routing & basic state libraries</li>
-          </ul>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>JavaScript (ES6+)</h3>
-          <p>Modern JavaScript for behaviour, animations and data flow. Comfortable with async/await, array methods and modules.</p>
-          <ul>
-            <li>Fetch & async workflows</li>
-            <li>Array / object utilities</li>
-            <li>Modular, readable code</li>
-          </ul>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>HTML5 & Accessibility</h3>
-          <p>Semantic markup with keyboard-friendly and screen-reader-friendly structure.</p>
-          <ul>
-            <li>Semantic layout & landmarks</li>
-            <li>ARIA roles where needed</li>
-            <li>Forms, validation & structure</li>
-          </ul>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>CSS3 & Layouts</h3>
-          <p>Responsive layouts using Flexbox & Grid, with a focus on maintainable, utility-style classes and theming.</p>
-          <ul>
-            <li>Flexbox & CSS Grid</li>
-            <li>Custom properties (CSS vars)</li>
-            <li>Animations & transitions</li>
-          </ul>
-        </article>
-
-        <article class="skill-card reveal">
-          <h3>REST APIs</h3>
-          <p>Connecting interfaces to real data: authentication flows, pagination, filtering and error-aware UI states.</p>
-          <ul>
-            <li>Fetch & Axios patterns</li>
-            <li>Handling loading/error states</li>
-            <li>Working with JSON payloads</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects" class="section alt">
-    <div class="container">
-      <header class="section-header">
-        <h2>Featured work</h2>
-        <p>Practical projects that demonstrate how I think about UX, performance and code quality.</p>
-      </header>
-
-      <div class="grid projects-grid">
-        <article class="project-card reveal">
-          <p class="badge">React · TypeScript</p>
-          <h3>Productivity Dashboard</h3>
-          <p>A responsive dashboard with reusable cards, API-driven charts and theme toggling. Built to highlight component architecture and state management.</p>
-          <ul class="project-meta">
-            <li>React + TypeScript</li>
-            <li>REST API integration</li>
-            <li>Dark / light modes</li>
-          </ul>
-          <a class="project-link" href="https://github.com/RolandDivServer" target="_blank" rel="noreferrer">View on GitHub →</a>
-        </article>
-
-        <article class="project-card reveal">
-          <p class="badge">HTML · CSS · JS</p>
-          <h3>Diluted Stories</h3>
-          <p>The editorial-style blog you’re reading this from: article previews, accessibility controls and a clean reading experience.</p>
-          <ul class="project-meta">
-            <li>Custom layout & typography</li>
-            <li>Article modal previews</li>
-            <li>Dark / light mode + TTS</li>
-          </ul>
-          <a class="project-link" href="/dilutedstories/" target="_self">Open Diluted Stories →</a>
-        </article>
-
-        <article class="project-card reveal">
-          <p class="badge">API · Front-End</p>
-          <h3>Market Insight Tool</h3>
-          <p>Concept for a small tool that consumes market data APIs to visualise trends and risk in a clean, opinionated UI.</p>
-          <ul class="project-meta">
-            <li>REST API consumption</li>
-            <li>Data visualisation concepts</li>
-            <li>Error / empty state handling</li>
-          </ul>
-          <a class="project-link" href="https://github.com/RolandDivServer" target="_blank" rel="noreferrer">View related code →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <div class="container about-grid">
-      <div class="about-copy reveal">
-        <h2>About Roland</h2>
-        <p>
-          I’m a front-end-leaning developer who enjoys turning vague ideas into interfaces that feel intuitive, predictable and fast.
-          My focus is on clean structure (HTML), thoughtful styling (CSS) and disciplined logic (TypeScript / JavaScript).
-        </p>
-        <p>
-          Whether it’s a blog like <em>Diluted Stories</em>, a productivity dashboard or a small internal tool, I’m happiest when
-          I’m shipping something that looks good, reads well and is straightforward for other developers to maintain.
-        </p>
-      </div>
-      <div class="about-side reveal">
-        <div class="about-card">
-          <h3>What I care about</h3>
-          <ul>
-            <li>Readable, well-commented code</li>
-            <li>Accessibility as a default, not an afterthought</li>
-            <li>Design systems and reusable components</li>
-            <li>Clear communication with product & design</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section alt">
-    <div class="container contact-grid">
-      <div class="contact-copy reveal">
-        <h2>Let’s work on something</h2>
-        <p>
-          I’m open to junior and mid-level front-end roles, freelance work and collaborations where a solid React / TypeScript /
-          HTML / CSS foundation is useful.
-        </p>
-        <p>
-          Email is usually the best way to reach me. I’m happy to share more code, walk through my projects or discuss how I’d
-          approach a specific UI challenge in your product.
-        </p>
-      </div>
-      <div class="contact-card reveal">
-        <p class="contact-label">Email</p>
-        <a class="contact-link" href="mailto:rolandjoycorreia@gmail.com">rolandjoycorreia@gmail.com</a>
-
-        <p class="contact-label">GitHub</p>
-        <a class="contact-link" href="https://github.com/RolandDivServer" target="_blank" rel="noreferrer">
-          github.com/RolandDivServer
-        </a>
-
-        <p class="contact-label">Blog</p>
-        <a class="contact-link" href="/dilutedstories/">rolandcorreia.com/dilutedstories</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
+<footer class="footer">
   <div class="container footer-inner">
     <span>© <span id="year"></span> Roland Correia</span>
-    <span class="footer-meta">Built with HTML5, CSS3 & ES6 · Showcasing TypeScript, React & REST API skills</span>
+    <a href="mailto:rolandjoycorreia@gmail.com">Email me</a>
   </div>
 </footer>
 
-<script src="./main.js" type="module"></script>
+<script src="main.js"></script>
 </body>
 </html>
